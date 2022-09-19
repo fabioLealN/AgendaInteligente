@@ -3,6 +3,7 @@ version: '3'
 services:
   laravel-api:
     build: .
+    container_name: laravel
     ports:
       - "8888:80"
     volumes:
@@ -12,6 +13,7 @@ services:
 
   postgres-api:
     image: postgres:latest
+    container_name: postgres
     ports:
       - "5432:5432"
     volumes:
@@ -25,6 +27,7 @@ services:
 
   adminer:
     image: adminer
+    container_name: adminer
     ports:
       - "8081:8080"
     depends_on:
