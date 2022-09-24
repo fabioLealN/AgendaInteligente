@@ -9,16 +9,24 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        //TODO: validar request
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
         if(!auth()->attempt($credentials)) {
             abort(401, 'Email e/ou senha inválidos');
         }
 
-        // $token = auth()->user()->createToken('auth_token');
         $token = $request->user()->createToken('auth_token');
 
         return response()->json(['data' => ['token' => $token->plainTextToken]]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([], 204);
     }
 }
