@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -21,6 +20,7 @@ class UserController extends Controller
 
         $user->name = $request->input('name');
         $user->phone = $request->input('phone');
+        $user->type_user_id = $request->input('type_user_id');
 
         $user->save();
 
