@@ -9,7 +9,7 @@ Clone o projeto do repositório:<br>
 
 
 Entre no diretório raiz do projeto e copie o conteúdo do .env-example para o .env:<br>
-`cp ./env-example ./env`
+`cp .env.example .env`
 
 
 Entre no diretório raiz do projeto e rode o comando:<br>
