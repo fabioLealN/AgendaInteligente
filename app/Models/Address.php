@@ -9,7 +9,7 @@ class Address extends Model
 {
     use HasFactory;
 
-    protected $table = 'adresses';
+    protected $table = 'addresses';
 
     protected $fillable = [
         'city_id',
@@ -18,4 +18,17 @@ class Address extends Model
         'number',
         'cep'
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function ong()
+    {
+        return $this->belongsTo(Ong::class);
+    }
+
+    public function city() {
+        return $this->belongsTo(City::class);
+    }
 }

@@ -21,11 +21,12 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email')->unique();
             $table->string('password');
-            $table->foreignIdFor(TypeUser::class);
-            $table->foreignIdFor(Address::class);
+            $table->unsignedBigInteger('address_id');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('address_id')->references('id')->on('addresses');
         });
     }
 

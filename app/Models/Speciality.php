@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class State extends Model
+class Speciality extends Model
 {
     use HasFactory;
 
-    protected $table = 'states';
+    protected $table = 'specialities';
 
     protected $fillable = [
-        'name'
+        'name',
+        'description'
     ];
 
-    public function cities()
+    public function ongs()
     {
-        return $this->hasMany(City::class);
+        return $this->belongsToMany(Ong::class);
     }
 }

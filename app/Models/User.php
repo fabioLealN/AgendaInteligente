@@ -12,36 +12,47 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'users';
+
     protected $fillable = [
         'name',
         'email',
         'password',
         'phone',
-        'type_user_id',
         'address_id'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function ongs()
+    {
+        return $this->belongsToMany(Ong::class);
+    }
+
+    public function schedules()
+    {
+        return $this->belongsToMany(Schedule::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
+
+    public function typeUser()
+    {
+        return $this->belongsTo(TypeUser::class);
+    }
+
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
 }
