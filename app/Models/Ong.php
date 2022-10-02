@@ -23,6 +23,6 @@ class Ong extends Model
 
     public function specialities()
     {
-        return $this->belongsToMany(Speciality::class);
+        return $this->belongsToMany(Speciality::class)->using(OngSpeciality::class);
     }
 }

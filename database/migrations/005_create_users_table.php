@@ -22,11 +22,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->unsignedBigInteger('address_id');
+            $table->unsignedBigInteger('type_user_id');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
 
             $table->foreign('address_id')->references('id')->on('addresses');
+            $table->foreign('type_user_id')->references('id')->on('types_users');
         });
     }
 
