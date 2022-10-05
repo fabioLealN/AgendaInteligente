@@ -18,11 +18,11 @@ class Ong extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->using(UserOng::class);
+        return $this->belongsToMany(User::class, 'users_ongs')->using(UserOng::class);
     }
 
     public function specialities()
     {
-        return $this->belongsToMany(Speciality::class)->using(OngSpeciality::class);
+        return $this->belongsToMany(Speciality::class, 'ongs_specialities')->using(OngSpeciality::class);
     }
 }
