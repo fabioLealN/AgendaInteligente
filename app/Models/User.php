@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function schedules()
     {
-        return $this->belongsToMany(Schedule::class)->using(UserSchedule::class);
+        return $this->belongsToMany(Schedule::class, 'users_schedules')->using(UserSchedule::class);
     }
 
     public function address()
