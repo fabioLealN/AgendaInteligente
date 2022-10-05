@@ -34,12 +34,12 @@ class User extends Authenticatable
 
     public function ongs()
     {
-        return $this->belongsToMany(Ong::class);
+        return $this->belongsToMany(Ong::class)->using(UserOng::class);
     }
 
     public function schedules()
     {
-        return $this->belongsToMany(Schedule::class);
+        return $this->belongsToMany(Schedule::class)->using(UserSchedule::class);
     }
 
     public function address()

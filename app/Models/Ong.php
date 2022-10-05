@@ -18,7 +18,7 @@ class Ong extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->using(UserOng::class);
     }
 
     public function specialities()
