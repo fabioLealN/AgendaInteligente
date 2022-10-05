@@ -41,3 +41,11 @@ Caso não consiga acessar a api do Laravel rode o comando na raiz do projeto:<br
 | Servidor | postgres |
 | Usuário | postgres |
 | Senha | postgres |
+
+## Comandos para factories
+
+Entrar no tinker: `php artisan tinker`
+Rodar comando de factory: `ModelName::factory(quantity)->create()`
+    egg: `User::factory(10)->create()`
+
+Possível erros: Não existir alguma tabela
