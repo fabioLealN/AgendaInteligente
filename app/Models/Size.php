@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TypeUser extends Model
+class Size extends Model
 {
     use HasFactory;
 
-    protected $table = 'types_users';
+    protected $table = 'sizes';
 
     protected $fillable = [
         'name'
     ];
 
-    public function users()
+    public function pets()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Pet::class);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\State;
+use App\Models\City;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,11 +14,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignIdFor(State::class);
+            $table->unsignedBigInteger('city_id');
+            $table->string('neighborhood');
+            $table->string('street');
+            $table->integer('number');
+            $table->string('cep');
             $table->timestamps();
+
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('addresses');
     }
 };

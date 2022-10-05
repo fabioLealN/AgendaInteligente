@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TypeUser extends Model
+class TypeScheduling extends Model
 {
     use HasFactory;
 
-    protected $table = 'types_users';
+    protected $table = 'types_schedulings';
 
     protected $fillable = [
         'name'
     ];
 
-    public function users()
+    public function schedulings()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Scheduling::class);
     }
 }
