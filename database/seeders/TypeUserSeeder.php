@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TypeUser;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,15 @@ class TypeUserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('types_users')->insert(
+        $typesUsers = [
             ['name' => 'ONG'],
             ['name' => 'Cliente'],
-        );
+        ];
+
+        foreach ($typesUsers as $typeUser) {
+            TypeUser::create([
+                'name' => $typeUser['name'],
+            ]);
+        }
     }
 }
