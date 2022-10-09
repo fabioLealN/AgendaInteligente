@@ -4,13 +4,20 @@ namespace App\Http\Controllers\Auth\Api;
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
-    public function register(Request $request, User $user, AddressController $addressController)
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+    public function register(Request $request, AddressController $addressController)
     {
         $request->validate([
             'name' => ['required'],
@@ -37,13 +44,8 @@ class RegisterController extends Controller
         $address = $addressController->store($request->only('city_id', 'neighborhood', 'street', 'number', 'cep'));
 
         $userData = $request->only('name', 'email', 'password', 'phone', 'type_user_id');
-        $userData['password'] = bcrypt($userData['password']);
         $userData['address_id'] = $address->id;
 
-        if(!$user = $user->create($userData)) {
-            abort(500, 'Ocorreu um erro! Tente novamente mais tarde.');
-        }
-
-        return response()->json(['data' => ['user' => $user]]);
+        return $this->userService->store($userData);
     }
 }

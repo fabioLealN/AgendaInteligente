@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\State;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Spatie\LaravelIgnition\Support\Composer\FakeComposer;
+use Illuminate\Support\Facades\Http;
 
 class StateSeeder extends Seeder
 {
@@ -16,6 +15,22 @@ class StateSeeder extends Seeder
      */
     public function run()
     {
+        $response = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
 
+        $states = collect(json_decode($response))->map(function ($state) {
+            return [
+                'id' => $state->id,
+                'name' => $state->nome,
+                'abbreviation' => $state->sigla,
+            ];
+        })->toArray();
+
+        foreach ($states as $state) {
+            State::create([
+                'id' => $state['id'],
+                'name' => $state['name'],
+                'abbreviation' => $state['abbreviation'],
+            ]);
+        }
     }
 }

@@ -30,7 +30,7 @@ class Schedule extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->using(UserSchedule::class);
+        return $this->belongsToMany(User::class, 'users_schedules')->using(UserSchedule::class);
     }
 
     public function schedulings()

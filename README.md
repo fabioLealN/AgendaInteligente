@@ -41,3 +41,23 @@ Caso não consiga acessar a api do Laravel rode o comando na raiz do projeto:<br
 | Servidor | postgres |
 | Usuário | postgres |
 | Senha | postgres |
+
+## Comandos para factories
+
+Entrar no tinker: `php artisan tinker`
+Rodar comando de factory: `ModelName::factory(quantity)->create()`
+    egg: `User::factory(10)->create()`
+
+Possível erros: Não existir alguma tabela
+
+## Para executar seed com URL do IBGE
+
+É necessário baixar o arquivo cacert.pem e colocar o diretótio em dois locais do arquivo php.ini<br>
+Link: https://curl.se/docs/caextract.html
+```
+[curl]
+curl.cainfo = "Diretório_do_arquivo_cacert.pem"
+
+[openssl]
+openssl.cafile= "Diretório_do_arquivo_cacert.pem"
+```
