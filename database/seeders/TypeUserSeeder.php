@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\TypeUser;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TypeUserSeeder extends Seeder
 {
