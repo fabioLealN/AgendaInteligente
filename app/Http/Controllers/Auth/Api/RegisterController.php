@@ -30,8 +30,7 @@ class RegisterController extends Controller
                     ->mixedCase()
                     ->letters()
                     ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
+                    ->symbols(),
             ],
             'type_user_id' => ['required'],
             'city_id' => ['required'],

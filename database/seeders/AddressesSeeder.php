@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\City;
-use App\Models\State;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Http;
 
 class AddressesSeeder extends Seeder
 {
@@ -16,26 +15,14 @@ class AddressesSeeder extends Seeder
      */
     public function run()
     {
-
-        $url = 'https://servicodados.ibge.gov.br/api/v1/localidades';
-        $estados = Http::get($url.'/estados');
-
-        foreach ($estados->json() as $value) {
-            print("Criando estado {$value['nome']}");
-            $state = State::forceCreate([
-                'id' => $value['id'],
-                'name' => $value['nome'],
+        City::all()->each(function ($city) {
+            Address::create([
+                'city_id' => $city->id,
+                'neighborhood' => fake('pt_BR')->streetName(),
+                'street' => fake('pt_BR')->streetName(),
+                'number' => fake('pt_BR')->buildingNumber(),
+                'cep' => fake('pt_BR')->postcode(),
             ]);
-
-            $cidades = Http::get($url."/estados/{$state->id}/distritos");
-            foreach ($cidades->json() as $cidade) {
-                print("Criando cidade {$cidade['nome']}\n");
-                $city = City::forceCreate([
-                    'id' => $cidade['id'],
-                    'name' => $cidade['nome'],
-                    'state_id' => $state->id,
-                ]);
-            }
-        }
+        });
     }
 }

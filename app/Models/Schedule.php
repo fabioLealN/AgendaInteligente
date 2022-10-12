@@ -21,9 +21,9 @@ class Schedule extends Model
     ];
 
     protected $casts = [
-        'start_time' => 'hh:mm',
-        'end_time' => 'hh:mm',
-        'interval_time' => 'hh:mm',
+        'start_time' => 'datetime:H:i',
+        'end_time' => 'datetime:H:i',
+        'interval_time' => 'datetime:H:i',
         'available' => 'boolean'
 
     ];
