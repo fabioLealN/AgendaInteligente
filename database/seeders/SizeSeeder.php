@@ -16,9 +16,9 @@ class SizeSeeder extends Seeder
     public function run()
     {
         $sizes = [
-            ['name' => 'Small'],
-            ['name' => 'Medium'],
-            ['name' => 'Large']
+            ['name' => 'Pequeno Porte'],
+            ['name' => 'Médio Porte'],
+            ['name' => 'Grande Porte']
         ];
 
         foreach ($sizes as $size) {
