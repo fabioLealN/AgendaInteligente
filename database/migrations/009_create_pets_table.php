@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('bith_date');
+            $table->date('birth_date');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('breed_id');
             $table->unsignedBigInteger('size_id');

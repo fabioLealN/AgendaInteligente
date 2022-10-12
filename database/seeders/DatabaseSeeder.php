@@ -19,12 +19,25 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             CitySeeder::class,
             TypeUserSeeder::class,
-        ]);
-        // \App\Models\User::factory(10)->create();
+            MessageSeeder::class,
+            BreedSeeder::class,
+            SizeSeeder::class,
+            SpecialitySeeder::class,
+            TypeSchedulingSeeder::class,
+            ScheduleSeeder::class,
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+            // Dependem de outros seeders
+            AddressesSeeder::class,
+            OngSeeder::class,
+            UserSeeder::class,
+            PetSeeder::class,
+            SchedulingSeeder::class,
+
+
+            // Relações many to many
+            OngSpecialitySeeder::class,
+            UserOngSeeder::class,
+            UserScheduleSeeder::class,
+        ]);
     }
 }
