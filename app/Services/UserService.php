@@ -28,12 +28,11 @@ class UserService
             return response()->json(['error' => 'Ocorreu um erro! Tente novamente mais tarde.'], 404);
         }
 
-        $user->name = $request->input('name');
-        $user->phone = $request->input('phone');
-        $user->type_user_id = $request->input('type_user_id');
-
         try
         {
+            $user->name = $request->input('name');
+            $user->phone = $request->input('phone');
+            $user->type_user_id = $request->input('type_user_id');
             $user->save();
             return response()->json(['status' => 'Atualizado com sucesso!', 200]);
         }

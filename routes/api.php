@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\Api\LoginController;
 use App\Http\Controllers\Auth\Api\RegisterController;
+use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,11 @@ Route::prefix('auth')->group(function () {
 Route::prefix('user')->group(function () {
     Route::put('update', [UserController::class, 'updateUser'])
         ->middleware('auth:sanctum');
+});
+
+Route::prefix('pets')->group(function () {
+    Route::get('/', [PetController::class, 'getPets'])->middleware('auth:sanctum');
+    Route::get('{id}', [PetController::class, 'getPet'])->middleware('auth:sanctum');
+    Route::post('/', [PetController::class, 'store'])->middleware('auth:sanctum');
+    Route::put('{id}', [PetController::class, 'update'])->middleware('auth:sanctum');
 });
