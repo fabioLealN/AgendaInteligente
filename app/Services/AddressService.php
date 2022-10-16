@@ -51,4 +51,16 @@ class AddressService
             return response()->json(['error' => $e->getMessage(), 422]);
         }
     }
+
+    public function delete(int $id)
+    {
+        $address = Address::find($id);
+
+        if(!!!$address) {
+            throw new ValidationException('Endereço não encontrado.', 422);
+        }
+
+        $address->delete();
+        return response()->json(['status' => 'Excluído com sucesso!', 200]);
+    }
 }
