@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ong;
 use App\Services\OngService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class OngController extends Controller
 {
+    private $ongService;
+
     public function __construct(OngService $ongService)
     {
         $this->ongService = $ongService;
@@ -16,12 +17,26 @@ class OngController extends Controller
 
     public function get($id)
     {
-        return Ong::find($id)->specialities;
+        try
+        {
+            return $this->ongService->get($id);
+        }
+        catch (ValidationException $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
 
     public function getAll()
     {
-        return Ong::all();
+        try
+        {
+            return $this->ongService->getAll();
+        }
+        catch (ValidationException $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
 
     public function store(Request $request, AddressController $addressController)
@@ -43,7 +58,7 @@ class OngController extends Controller
         catch (ValidationException $e)
         {
             $addressController->delete($address->id);
-            return response()->json(['error' => $e->getMessage(), 422]);
+            return response()->json(['error' => $e->getMessage()], 422);
         }
     }
 

@@ -29,7 +29,7 @@ class AddressController extends Controller
         $user = User::find($request->user()->id);
         $addressData = $request->only('city_id', 'neighborhood', 'street', 'number', 'cep');
 
-        return $this->addressService->store($user, $addressData);
+        return $this->addressService->update($user, $addressData);
     }
 
     public function delete(int $id)

@@ -4,12 +4,35 @@ namespace App\Services;
 
 use App\Models\Ong;
 use App\Models\Speciality;
+use BadMethodCallException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class OngService
 {
+    public function get($id)
+    {
+        $ong = Ong::find($id);
+
+        if(!$ong) {
+            throw ValidationException::withMessages(['ONG não encontrada']);
+        }
+
+        return $ong->specialities;
+    }
+
+    public function getAll()
+    {
+        $ongs = Ong::all();
+
+        if(!$ongs) {
+            throw ValidationException::withMessages(['Não há ONGs salvas.']);
+        }
+
+        return $ongs->each(fn($ong) => $ong->specialities);
+    }
+
     public function store(array $ongData)
     {
         $specialities = Speciality::whereIn('id', $ongData['specialities_ids'])->get();
@@ -26,10 +49,10 @@ class OngService
 
             return response()->json(['data' => ['ong' => $ong]], 201);
         }
-        catch (ValidationException $e)
+        catch (BadMethodCallException | ValidationException $e)
         {
             DB::rollBack();
-            throw new ValidationException($e->getMessage(), 422);
+            throw ValidationException::withMessages([$e->getMessage()]);
         }
     }
 
@@ -54,7 +77,7 @@ class OngService
         catch (ValidationException $e)
         {
             DB::rollBack();
-            return response()->json(['error' => $e->getMessage(), 422]);
+            return response()->json(['error' => $e->getMessage()], 422);
         }
     }
 }
