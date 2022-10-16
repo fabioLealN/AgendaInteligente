@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Services\PetService;
+use Illuminate\Validation\ValidationException;
 
 class PetController extends Controller
 {
@@ -18,13 +17,26 @@ class PetController extends Controller
 
     public function getAll()
     {
-        return Pet::where('user_id', Auth::user()->id)->get();
+        try
+        {
+            return $this->petService->getAll();
+        }
+        catch (ValidationException $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
 
     public function get($id)
     {
-        return Pet::where('id', $id)
-                    ->where('user_id', Auth::user()->id)->get();
+        try
+        {
+            return $this->petService->get($id);
+        }
+        catch (ValidationException $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
 
     public function store(Request $request)
@@ -40,7 +52,7 @@ class PetController extends Controller
     {
         $this->validateData($request);
 
-        $this->petService->update($id, $request);
+        return $this->petService->update($id, $request);
     }
 
     private function validateData(Request $request)

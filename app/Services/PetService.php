@@ -11,10 +11,32 @@ use Illuminate\Validation\ValidationException;
 
 class PetService
 {
+    public function get(int $id)
+    {
+        $pet = Pet::where('id', $id)->where('user_id', Auth::user()->id)->get()->toArray();
+
+        if(!$pet) {
+            throw ValidationException::withMessages(['Animal não encontrado']);
+        }
+
+        return $pet;
+    }
+
+    public function getAll()
+    {
+        $pets = Pet::where('user_id', Auth::user()->id)->get()->toArray();
+
+        if(!$pets) {
+            throw ValidationException::withMessages(['Não há animais salvos.']);
+        }
+
+        return $pets;
+    }
+
     public function store(array $petData)
     {
         if ($this->validateBreedAndSize($petData['breed_id'], $petData['size_id'])) {
-            return response()->json(['error' => 'Ocorreu um erro! Tente novamente mais tarde.'], 404);
+            return response()->json(['error' => 'Porte e/ou raça não encontrados.'], 404);
         }
 
         $petData['user_id'] = Auth::user()->id;
@@ -30,10 +52,10 @@ class PetService
 
     public function update(int $id, Request $request)
     {
-        $pet = Pet::find($id);
+        $pet = Pet::where('id', $id)->where('user_id', Auth::user()->id)->get();
 
         if(!!!$pet || $this->validateBreedAndSize($request->input('breed_id'), $request->input('size_id'))) {
-            return response()->json(['error' => 'Ocorreu um erro! Tente novamente mais tarde.'], 404);
+            return response()->json(['error' => 'Ocorreu um erro! Dados não encontrados.'], 404);
         }
 
         try

@@ -25,7 +25,7 @@ class UserService
     {
         $user = User::find($request->user()->id);
         if (!!!$user) {
-            return response()->json(['error' => 'Ocorreu um erro! Tente novamente mais tarde.'], 404);
+            return response()->json(['error' => 'Usuário não encontrado.'], 404);
         }
 
         try

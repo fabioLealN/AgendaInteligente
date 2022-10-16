@@ -13,7 +13,7 @@ class AddressService
     {
         $city = City::find($addressData['city_id']);
         if (!!!$city) {
-            return response()->json(['error' => 'Ocorreu um erro! Tente novamente mais tarde.'], 404);
+            return response()->json(['error' => 'Cidade não encontrada.'], 404);
         }
 
         try
@@ -22,7 +22,7 @@ class AddressService
         }
         catch (ValidationException $e)
         {
-            return response()->json(['error' => $e->getMessage(), 422]);
+            return response()->json(['error' => $e->getMessage()], 422);
         }
     }
 
@@ -32,7 +32,7 @@ class AddressService
         $city = City::find($addressData['city_id']);
 
         if (!!!$city || !!!$address) {
-            return response()->json(['error' => 'Ocorreu um erro! Tente novamente mais tarde.'], 404);
+            return response()->json(['error' => 'Endereço não encontrado.'], 404);
         }
 
         $address->city = $addressData['city_id'];
@@ -57,7 +57,7 @@ class AddressService
         $address = Address::find($id);
 
         if(!!!$address) {
-            throw new ValidationException('Endereço não encontrado.', 422);
+            throw ValidationException::withMessages(['Endereço não encontrado.']);
         }
 
         $address->delete();

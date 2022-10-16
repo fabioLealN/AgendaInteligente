@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\Api\LoginController;
 use App\Http\Controllers\Auth\Api\RegisterController;
 use App\Http\Controllers\OngController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,4 +48,11 @@ Route::prefix('ongs')->group(function () {
     Route::get('{id}', [OngController::class, 'get'])->middleware('auth:sanctum');
     Route::post('/', [OngController::class, 'store'])->middleware('auth:sanctum');
     Route::put('{id}', [OngController::class, 'update'])->middleware('auth:sanctum');
+});
+
+Route::prefix('specialities')->group(function () {
+    Route::get('/', [SpecialityController::class, 'getAll'])->middleware('auth:sanctum');
+    Route::get('{id}', [SpecialityController::class, 'get'])->middleware('auth:sanctum');
+    Route::post('/', [SpecialityController::class, 'store'])->middleware('auth:sanctum');
+    Route::put('{id}', [SpecialityController::class, 'update'])->middleware('auth:sanctum');
 });
