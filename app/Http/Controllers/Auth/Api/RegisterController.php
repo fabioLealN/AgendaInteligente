@@ -33,14 +33,9 @@ class RegisterController extends Controller
                     ->symbols(),
             ],
             'type_user_id' => ['required'],
-            'city_id' => ['required'],
-            'neighborhood' => ['required'],
-            'street' => ['required'],
-            'number' => ['required'],
-            'cep' => ['required'],
         ]);
 
-        $address = $addressController->store($request->only('city_id', 'neighborhood', 'street', 'number', 'cep'));
+        $address = $addressController->store($request);
 
         $userData = $request->only('name', 'email', 'password', 'phone', 'type_user_id');
         $userData['address_id'] = $address->id;

@@ -16,12 +16,12 @@ class PetController extends Controller
         $this->petService = $petService;
     }
 
-    public function getPets()
+    public function getAll()
     {
         return Pet::where('user_id', Auth::user()->id)->get();
     }
 
-    public function getPet($id)
+    public function get($id)
     {
         return Pet::where('id', $id)
                     ->where('user_id', Auth::user()->id)->get();
