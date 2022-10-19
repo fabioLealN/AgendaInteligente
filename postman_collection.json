@@ -771,6 +771,85 @@
 			]
 		},
 		{
+			"name": "Porte",
+			"item": [
+				{
+					"name": "Get Porte",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/sizes/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"sizes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Portes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/breeds/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"breeds",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Registro Novo Usuário",
 			"request": {
 				"method": "POST",
