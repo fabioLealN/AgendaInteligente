@@ -16,7 +16,7 @@ class OngService
         $ong = Ong::find($id);
 
         if(!$ong) {
-            throw ValidationException::withMessages(['ONG não encontrada']);
+            throw ValidationException::withMessages(['ONG não encontrada.']);
         }
 
         return $ong->specialities;

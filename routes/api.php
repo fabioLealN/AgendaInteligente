@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\Api\LoginController;
 use App\Http\Controllers\Auth\Api\RegisterController;
+use App\Http\Controllers\BreedController;
 use App\Http\Controllers\OngController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\SpecialityController;
@@ -55,4 +56,11 @@ Route::prefix('specialities')->group(function () {
     Route::get('{id}', [SpecialityController::class, 'get'])->middleware('auth:sanctum');
     Route::post('/', [SpecialityController::class, 'store'])->middleware('auth:sanctum');
     Route::put('{id}', [SpecialityController::class, 'update'])->middleware('auth:sanctum');
+});
+
+Route::prefix('breeds')->group(function () {
+    Route::get('/', [BreedController::class, 'getAll'])->middleware('auth:sanctum');
+    Route::get('{id}', [BreedController::class, 'get'])->middleware('auth:sanctum');
+    Route::post('/', [BreedController::class, 'store'])->middleware('auth:sanctum');
+    Route::put('{id}', [BreedController::class, 'update'])->middleware('auth:sanctum');
 });
