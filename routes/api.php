@@ -7,6 +7,7 @@ use App\Http\Controllers\OngController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SpecialityController;
+use App\Http\Controllers\TypeSchedulingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -69,4 +70,11 @@ Route::prefix('breeds')->group(function () {
 Route::prefix('sizes')->group(function () {
     Route::get('/', [SizeController::class, 'getAll'])->middleware('auth:sanctum');
     Route::get('{id}', [SizeController::class, 'get'])->middleware('auth:sanctum');
+});
+
+Route::prefix('types-schedulings')->group(function () {
+    Route::get('/', [TypeSchedulingController::class, 'getAll'])->middleware('auth:sanctum');
+    Route::get('{id}', [TypeSchedulingController::class, 'get'])->middleware('auth:sanctum');
+    Route::post('/', [TypeSchedulingController::class, 'store'])->middleware('auth:sanctum');
+    Route::put('{id}', [TypeSchedulingController::class, 'update'])->middleware('auth:sanctum');
 });

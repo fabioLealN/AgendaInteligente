@@ -753,7 +753,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8888/api/breeds/4",
+							"raw": "http://localhost:8888/api/breeds/10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -762,7 +762,7 @@
 							"path": [
 								"api",
 								"breeds",
-								"4"
+								"10"
 							]
 						}
 					},
@@ -795,7 +795,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8888/api/sizes/4",
+							"raw": "http://localhost:8888/api/sizes/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -804,7 +804,7 @@
 							"path": [
 								"api",
 								"sizes",
-								"4"
+								"1"
 							]
 						}
 					},
@@ -832,7 +832,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8888/api/breeds/",
+							"raw": "http://localhost:8888/api/sizes/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -840,8 +840,179 @@
 							"port": "8888",
 							"path": [
 								"api",
-								"breeds",
+								"sizes",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tipo de Agendamento",
+			"item": [
+				{
+					"name": "Get Tipo de Agendamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/types-schedulings/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"types-schedulings",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tipos de Agendamentos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/types-schedulings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"types-schedulings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo Tipo de Agendamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tipo de Agendamento Teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/types-schedulings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"types-schedulings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Tipo de Agendamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tipo de Agendamento Teste 2.0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/types-schedulings/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"types-schedulings",
+								"4"
 							]
 						}
 					},
