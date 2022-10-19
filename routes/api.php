@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\Api\RegisterController;
 use App\Http\Controllers\BreedController;
 use App\Http\Controllers\OngController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -63,4 +64,9 @@ Route::prefix('breeds')->group(function () {
     Route::get('{id}', [BreedController::class, 'get'])->middleware('auth:sanctum');
     Route::post('/', [BreedController::class, 'store'])->middleware('auth:sanctum');
     Route::put('{id}', [BreedController::class, 'update'])->middleware('auth:sanctum');
+});
+
+Route::prefix('sizes')->group(function () {
+    Route::get('/', [SizeController::class, 'getAll'])->middleware('auth:sanctum');
+    Route::get('{id}', [SizeController::class, 'get'])->middleware('auth:sanctum');
 });
