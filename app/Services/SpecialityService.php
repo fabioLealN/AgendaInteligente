@@ -17,7 +17,7 @@ class SpecialityService
             throw ValidationException::withMessages(['Especialidade não encontrada.']);
         }
 
-        return $speciality;
+        return response()->json(['data' => $speciality]);
     }
 
     public function getAll()
@@ -28,8 +28,17 @@ class SpecialityService
             throw ValidationException::withMessages(['Não há especialidades salvas.']);
         }
 
-        return $specialities;
+        return response()->json(['data' => $specialities]);
     }
+
+    public function getOngs($specialityId)
+    {
+        $ongs = Speciality::find($specialityId)->ongs;
+        $ongs->load('address');
+        
+        return response()->json(['data' => $ongs]);
+    }
+
 
     public function store(array $specialityData)
     {
