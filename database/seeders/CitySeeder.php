@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\City;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class CitySeeder extends Seeder
 {
