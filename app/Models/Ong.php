@@ -25,4 +25,9 @@ class Ong extends Model
     {
         return $this->belongsToMany(Speciality::class, 'ongs_specialities')->using(OngSpeciality::class);
     }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
 }

@@ -15,12 +15,19 @@ class TypeUserSeeder extends Seeder
     public function run()
     {
         $typesUsers = [
-            ['name' => 'ONG'],
-            ['name' => 'Cliente'],
+            [
+                'id' => 1,
+                'name' => 'ONG'
+            ],
+            [
+                'id' => 2,
+                'name' => 'Cliente'
+            ],
         ];
 
         foreach ($typesUsers as $typeUser) {
             TypeUser::create([
+                'id' => $typeUser['id'],
                 'name' => $typeUser['name'],
             ]);
         }

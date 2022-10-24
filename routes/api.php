@@ -36,8 +36,8 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
-    Route::put('update', [UserController::class, 'updateUser'])
-        ->middleware('auth:sanctum');
+    Route::put('{id}', [UserController::class, 'get'])->middleware('auth:sanctum');
+    Route::put('update', [UserController::class, 'update'])->middleware('auth:sanctum');
 });
 
 Route::prefix('pets')->group(function () {
@@ -81,7 +81,8 @@ Route::prefix('types-schedulings')->group(function () {
 });
 
 Route::prefix('schedules')->group(function () {
-    Route::get('/', [ScheduleController::class, 'getAll'])->middleware('auth:sanctum');
+    // Route::get('/', [ScheduleController::class, 'getAll'])->middleware('auth:sanctum');
+    Route::get('/', [ScheduleController::class, 'getByDistance'])->middleware('auth:sanctum');
     Route::get('{id}', [ScheduleController::class, 'get'])->middleware('auth:sanctum');
     Route::post('/', [ScheduleController::class, 'store'])->middleware('auth:sanctum');
     Route::put('{id}', [ScheduleController::class, 'update'])->middleware('auth:sanctum');

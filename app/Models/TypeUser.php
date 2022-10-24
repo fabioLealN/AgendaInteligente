@@ -9,6 +9,9 @@ class TypeUser extends Model
 {
     use HasFactory;
 
+    const TYPE_ONG = 1;
+    const TYPE_CLIENT = 2;
+
     protected $table = 'types_users';
 
     protected $fillable = [
@@ -17,6 +20,6 @@ class TypeUser extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }

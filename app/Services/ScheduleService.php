@@ -3,13 +3,32 @@
 namespace App\Services;
 
 use App\Models\Schedule;
+use App\Models\TypeUser;
+use App\Models\User;
 use BadMethodCallException;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class ScheduleService
 {
+    public function get(int $id)
+    {
+        $schedule = Schedule::find($id);
+
+        if(!$schedule) {
+            throw ValidationException::withMessages(['Agenda não encontrada.']);
+        }
+
+
+        $schedule->users;
+        $schedule->schedulings;
+
+        return $schedule;
+    }
+
+
     public function store(array $scheduleData)
     {
         $arrayDate = $this->defineArrayDate($scheduleData['start_date'], $scheduleData['end_date']);
@@ -18,6 +37,8 @@ class ScheduleService
 
         try
         {
+            $this->verifyUserBelongsToOng($scheduleData['users_ids']);
+
             DB::beginTransaction();
 
             foreach($arrayDate as $date) {
@@ -46,6 +67,21 @@ class ScheduleService
         }
 
         return response()->json(['data' => ['schedules' => $response]], 201);
+    }
+
+
+    private function verifyUserBelongsToOng(array $usersIds)
+    {
+        foreach($usersIds as $userId)
+        {
+            $user = User::whereId($userId)->where('type_user_id', TypeUser::TYPE_ONG)->get()->toArray();
+
+            if(!$user) {
+                throw ValidationException::withMessages(['Usuário não encontrado ou não atua em ONGs.']);
+            }
+        }
+
+        return true;
     }
 
 
