@@ -8,7 +8,6 @@ use App\Models\Scheduling;
 use App\Models\TypeScheduling;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Log;
 
 class SchedulingSeeder extends Seeder
 {

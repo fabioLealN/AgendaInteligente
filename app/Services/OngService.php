@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\CalculateDistanceOngSide;
 use App\Models\Ong;
 use App\Models\Speciality;
 use BadMethodCallException;
@@ -46,6 +47,8 @@ class OngService
                 $ong = Ong::create($ongData);
                 $ong->specialities()->attach($ongData['specialities_ids']);
             DB::commit();
+
+            CalculateDistanceOngSide::dispatch($ong->id);
 
             return response()->json(['data' => ['ong' => $ong]], 201);
         }

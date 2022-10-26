@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\Api\RegisterController;
 use App\Http\Controllers\BreedController;
 use App\Http\Controllers\OngController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\TypeSchedulingController;
@@ -35,8 +36,8 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
-    Route::put('update', [UserController::class, 'updateUser'])
-        ->middleware('auth:sanctum');
+    Route::put('{id}', [UserController::class, 'get'])->middleware('auth:sanctum');
+    Route::put('update', [UserController::class, 'update'])->middleware('auth:sanctum');
 });
 
 Route::prefix('pets')->group(function () {
@@ -78,4 +79,11 @@ Route::prefix('types-schedulings')->group(function () {
     Route::get('{id}', [TypeSchedulingController::class, 'get'])->middleware('auth:sanctum');
     Route::post('/', [TypeSchedulingController::class, 'store'])->middleware('auth:sanctum');
     Route::put('{id}', [TypeSchedulingController::class, 'update'])->middleware('auth:sanctum');
+});
+
+Route::prefix('schedules')->group(function () {
+    // Route::get('/', [ScheduleController::class, 'getAll'])->middleware('auth:sanctum');
+    Route::get('{id}', [ScheduleController::class, 'get'])->middleware('auth:sanctum');
+    Route::post('/', [ScheduleController::class, 'store'])->middleware('auth:sanctum');
+    Route::put('{id}', [ScheduleController::class, 'update'])->middleware('auth:sanctum');
 });

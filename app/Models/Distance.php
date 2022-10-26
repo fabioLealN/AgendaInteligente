@@ -5,21 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TypeUser extends Model
+class Distance extends Model
 {
     use HasFactory;
 
-    const TYPE_ONG = 1;
-    const TYPE_CLIENT = 2;
-
-    protected $table = 'types_users';
+    protected $table = 'distances';
 
     protected $fillable = [
-        'name'
+        'user_id',
+        'ong_id',
+        'distance'
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function ong()
+    {
+        return $this->belongsTo(Ong::class);
     }
 }

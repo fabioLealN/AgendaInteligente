@@ -30,4 +30,9 @@ class Ong extends Model
     {
         return $this->belongsTo(Address::class);
     }
+
+    public function distances()
+    {
+        return $this->hasMany(Distance::class);
+    }
 }
