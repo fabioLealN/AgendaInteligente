@@ -57,6 +57,7 @@ Route::prefix('ongs')->group(function () {
 Route::prefix('specialities')->group(function () {
     Route::get('/', [SpecialityController::class, 'getAll'])->middleware('auth:sanctum');
     Route::get('{id}', [SpecialityController::class, 'get'])->middleware('auth:sanctum');
+    Route::get('{id}/ongs', [SpecialityController::class, 'getOngs'])->middleware('auth:sanctum');
     Route::post('/', [SpecialityController::class, 'store'])->middleware('auth:sanctum');
     Route::put('{id}', [SpecialityController::class, 'update'])->middleware('auth:sanctum');
 });

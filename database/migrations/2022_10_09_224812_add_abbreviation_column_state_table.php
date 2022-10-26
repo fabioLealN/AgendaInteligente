@@ -15,7 +15,7 @@ return new class extends Migration
     {
         if (!Schema::hasColumn('states', 'abbreviation')) {
             Schema::table('states', function($table) {
-                $table->string('abbreviation');
+                $table->string('abbreviation')->nullable();
             });
         }
     }
