@@ -7,8 +7,8 @@ use App\Models\TypeUser;
 use App\Models\User;
 use BadMethodCallException;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class ScheduleService
@@ -67,6 +67,33 @@ class ScheduleService
         }
 
         return response()->json(['data' => ['schedules' => $response]], 201);
+    }
+
+
+    public function update(int $id, Request $request)
+    {
+        $schedule = Schedule::find($id);
+
+        if(!!!$schedule) {
+            return response()->json(['error' => 'Agenda não encontrada.'], 404);
+        }
+
+        try  {
+            DB::beginTransaction();
+                $schedule->date = Carbon::parse($request->input('date'));
+                $schedule->start_time = Carbon::createFromTimeString($request->input('start_time'));
+                $schedule->end_time = Carbon::createFromTimeString($request->input('end_time'));
+                $schedule->available = $request->input('available');
+                $schedule->save();
+            DB::commit();
+
+            return response()->json(['status' => 'Atualizado com sucesso!'], 200);
+        }
+        catch (ValidationException $e)
+        {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
     }
 
 

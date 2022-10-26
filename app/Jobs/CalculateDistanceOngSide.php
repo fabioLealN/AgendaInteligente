@@ -12,7 +12,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use KMLaravel\GeographicalCalculator\Facade\GeoFacade;
 
 class CalculateDistanceOngSide implements ShouldQueue
@@ -70,7 +69,6 @@ class CalculateDistanceOngSide implements ShouldQueue
             if(!$collectionUserLocation->toArray()) {
                 continue;
             }
-            Log::info($collectionUserLocation);
 
             $userCoord = [
                 $collectionUserLocation->first()->lat,
