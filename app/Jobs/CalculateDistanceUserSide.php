@@ -1,47 +1,38 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Jobs;
 
-use App\Models\Address;
+use App\Models\Distance;
 use App\Models\Ong;
-use App\Models\Schedule;
-use App\Models\State;
 use App\Models\User;
-use App\Services\ScheduleService;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
 use KMLaravel\GeographicalCalculator\Facade\GeoFacade;
 
-class ScheduleController extends Controller
+class CalculateDistanceUserSide implements ShouldQueue
 {
-    private $scheduleService;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(ScheduleService $scheduleService)
+    private $userId;
+
+    public function __construct($userId)
     {
-        $this->scheduleService = $scheduleService;
+        $this->userId = $userId;
     }
 
-    public function get(int $id)
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
     {
-        try
-        {
-            return $this->scheduleService->get($id);
-        }
-        catch (ValidationException $e)
-        {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
-    }
-
-
-    public function getByDistance()
-    {
-        $userId = Auth::user()->id;
-        $user = User::find($userId);
+        $user = User::find($this->userId);
         $userAddress = $user->address;
 
         $street = $userAddress->street;
@@ -61,9 +52,7 @@ class ScheduleController extends Controller
             $collectionUserLocation->first()->lon,
         ];
 
-
         $ongs = Ong::all();
-        $arrayResponse = [];
 
         foreach($ongs as $ong) {
             $ongAddress = $ong->address;
@@ -96,47 +85,12 @@ class ScheduleController extends Controller
                 ->getDistance())
                 ->first();
 
-            array_push($arrayResponse, [
-                'user_id' => $user->name,
-                'ong_id' => $ong->name,
-                'distance' => $distance['km'],
-            ]);
-        }
-
-
-        return $arrayResponse;
-    }
-
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date'],
-            'interval' => ['required'],
-            'start_time' => ['required'],
-            'end_time' => ['required'],
-            'days_week' => ['array', 'nullable'],
-            'users_ids' => ['required', 'array'],
-        ]);
-
-        $scheduleData = $request->only(
-            'start_date',
-            'end_date',
-            'interval',
-            'start_time',
-            'end_time',
-            'days_week',
-            'users_ids'
-        );
-
-        try
-        {
-            return $this->scheduleService->store($scheduleData);
-        }
-        catch (ValidationException $e)
-        {
-            return response()->json(['error' => $e->getMessage()], 422);
+            if ($distance > 101) {
+                Distance::updateOrCreate(
+                    ['user_id' => $user->id, 'ong_id' => $ong->id],
+                    ['distance' => $distance['km']]
+                );
+            }
         }
     }
 }
