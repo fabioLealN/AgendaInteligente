@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Speciality;
 use App\Services\SpecialityService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -37,6 +38,11 @@ class SpecialityController extends Controller
         {
             return response()->json(['error' => $e->getMessage()], 404);
         }
+    }
+
+    public function getOngs(Speciality $id)
+    {
+        return $this->specialityService->getOngs($id->id);
     }
 
     public function store(Request $request)

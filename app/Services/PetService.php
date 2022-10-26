@@ -24,13 +24,15 @@ class PetService
 
     public function getAll()
     {
-        $pets = Pet::where('user_id', Auth::user()->id)->get()->toArray();
+        $user = User::find(Auth::user()->id);
+
+        $pets = $user->pets;
 
         if(!$pets) {
             throw ValidationException::withMessages(['Não há animais salvos.']);
         }
 
-        return $pets;
+        return response()->json(['data' => $pets]);
     }
 
     public function store(array $petData)

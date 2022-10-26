@@ -19,8 +19,9 @@ class LoginController extends Controller
         }
 
         $token = $request->user()->createToken('auth_token');
+        $user =  $request->user()->load(['pets','pets.breed', 'pets.size']);
 
-        return response()->json(['data' => ['token' => $token->plainTextToken]]);
+        return response()->json(['data' => ['token' => $token->plainTextToken, 'user' => $user]]);
     }
 
     public function logout(Request $request)
