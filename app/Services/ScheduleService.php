@@ -7,8 +7,10 @@ use App\Models\TypeUser;
 use App\Models\User;
 use BadMethodCallException;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class ScheduleService
@@ -21,11 +23,28 @@ class ScheduleService
             throw ValidationException::withMessages(['Agenda não encontrada.']);
         }
 
-
         $schedule->users;
         $schedule->schedulings;
 
         return $schedule;
+    }
+
+
+    public function getAllAvailable(array $ongsIds)
+    {
+        $schedules = Schedule::where('available', true)
+            ->whereRelation('users.ongs',
+                function (Builder $query) use ($ongsIds) {
+                    $query->whereIn('ongs.id', $ongsIds);
+                })
+            ->get()
+            ->toArray();
+
+        if(!$schedules) {
+            throw ValidationException::withMessages(['Não há ONGs disponíveis.']);
+        }
+
+        return $schedules;
     }
 
 

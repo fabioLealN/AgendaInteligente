@@ -252,7 +252,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8888/api/ongs/20",
+							"raw": "http://localhost:8888/api/ongs/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -261,7 +261,7 @@
 							"path": [
 								"api",
 								"ongs",
-								"20"
+								"1"
 							]
 						}
 					},
@@ -453,7 +453,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8888/api/specialities/10",
+							"raw": "http://localhost:8888/api/specialities/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -462,7 +462,7 @@
 							"path": [
 								"api",
 								"specialities",
-								"10"
+								"1"
 							]
 						}
 					},
@@ -592,6 +592,56 @@
 								"api",
 								"specialities",
 								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ONGs por Especialidade",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/specialities/3/ongs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"specialities",
+								"3",
+								"ongs"
 							]
 						}
 					},
@@ -1061,6 +1111,55 @@
 					"response": []
 				},
 				{
+					"name": "Get Agendas Disponíveis",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ongs_ids\": [1, 2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/schedules/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"schedules",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Nova Agenda",
 					"request": {
 						"auth": {
@@ -1083,7 +1182,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"start_date\" : \"2022-01-01\",\r\n    \"end_date\": \"2022-01-10\",\r\n    \"interval\": \"01:00\",\r\n    \"start_time\": \"08:00\",\r\n    \"end_time\": \"17:00\",\r\n    \"days_week\": [\"qua\"],\r\n    \"users_ids\": [1]\r\n}",
+							"raw": "{\r\n    \"start_date\" : \"2022-01-01\",\r\n    \"end_date\": \"2022-01-10\",\r\n    \"interval\": \"01:00\",\r\n    \"start_time\": \"08:00\",\r\n    \"end_time\": \"12:00\",\r\n    \"days_week\": [\"qua\"],\r\n    \"users_ids\": [8]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
