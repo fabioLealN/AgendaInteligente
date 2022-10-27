@@ -25,7 +25,7 @@ class OngService
 
     public function getAll()
     {
-        $ongs = Ong::with('specialities')->all();
+        $ongs = Ong::with('specialities')->get();
 
         if(!$ongs) {
             throw ValidationException::withMessages(['Não há ONGs salvas.']);

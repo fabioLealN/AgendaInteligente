@@ -35,7 +35,8 @@ class SpecialityService
     {
         $ongs = Speciality::find($specialityId)->ongs;
         $ongs->load('address');
-        
+        $ongs->load('distances');
+
         return response()->json(['data' => $ongs]);
     }
 
