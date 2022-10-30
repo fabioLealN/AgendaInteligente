@@ -47,7 +47,7 @@ class UserService
             $user->phone = $request->input('phone');
             $user->type_user_id = $request->input('type_user_id');
             $user->save();
-            return response()->json(['status' => 'Atualizado com sucesso!', 200]);
+            return response()->json(['data' => ['status' => 'Atualizado com sucesso!']], 200);
         }
         catch (ValidationException $e)
         {

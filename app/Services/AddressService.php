@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Jobs\CalculateDistanceOngSide;
+use App\Jobs\CalculateDistanceUserSide;
 use App\Models\Address;
 use App\Models\City;
+use App\Models\TypeUser;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
@@ -44,7 +47,14 @@ class AddressService
         try
         {
             $address->save();
-            return response()->json(['status' => 'Atualizado com sucesso!', 200]);
+
+
+            if ($user->type_user_id == TypeUser::TYPE_CLIENT) {
+                CalculateDistanceUserSide::dispatch($user->id);
+            } else {
+                CalculateDistanceOngSide::dispatch($user->songs->first()->id);
+            }
+            return response()->json(['data' => ['status' => 'Atualizado com sucesso!']], 200);
         }
         catch (ValidationException $e)
         {
@@ -61,6 +71,6 @@ class AddressService
         }
 
         $address->delete();
-        return response()->json(['status' => 'Excluído com sucesso!', 200]);
+        return response()->json(['data' => ['status' => 'Excluído com sucesso!']], 200);
     }
 }

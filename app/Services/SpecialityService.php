@@ -74,7 +74,7 @@ class SpecialityService
                 $speciality->save();
             DB::commit();
 
-            return response()->json(['status' => 'Atualizado com sucesso!'], 200);
+            return response()->json(['data' => ['status' => 'Atualizado com sucesso!']], 200);
         }
         catch (ValidationException $e)
         {

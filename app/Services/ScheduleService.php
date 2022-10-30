@@ -33,6 +33,8 @@ class ScheduleService
     public function getAllAvailable(array $ongsIds)
     {
         $schedules = Schedule::where('available', true)
+            ->with('users')
+            ->with('users.ongs')
             ->whereRelation('users.ongs',
                 function (Builder $query) use ($ongsIds) {
                     $query->whereIn('ongs.id', $ongsIds);
@@ -106,7 +108,7 @@ class ScheduleService
                 $schedule->save();
             DB::commit();
 
-            return response()->json(['status' => 'Atualizado com sucesso!'], 200);
+            return response()->json(['data' => ['status' => 'Atualizado com sucesso!']], 200);
         }
         catch (ValidationException $e)
         {

@@ -33,4 +33,9 @@ class Pet extends Model
     {
         return $this->belongsTo(Size::class);
     }
+
+    public function schedulings()
+    {
+        return $this->hasMany(Scheduling::class);
+    }
 }

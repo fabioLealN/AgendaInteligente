@@ -6,6 +6,7 @@ use App\Http\Controllers\BreedController;
 use App\Http\Controllers\OngController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SchedulingController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\TypeSchedulingController;
@@ -86,4 +87,13 @@ Route::prefix('schedules')->group(function () {
     Route::get('{id}', [ScheduleController::class, 'get'])->middleware('auth:sanctum');
     Route::post('/', [ScheduleController::class, 'store'])->middleware('auth:sanctum');
     Route::put('{id}', [ScheduleController::class, 'update'])->middleware('auth:sanctum');
+});
+
+Route::prefix('schedulings')->group(function () {
+    Route::get('/', [SchedulingController::class, 'getAll'])->middleware('auth:sanctum');
+    Route::get('/next-schedulings', [SchedulingController::class, 'getFutureSchedulings'])->middleware('auth:sanctum');
+    Route::get('{id}', [SchedulingController::class, 'get'])->middleware('auth:sanctum');
+    Route::post('/', [SchedulingController::class, 'store'])->middleware('auth:sanctum');
+    Route::put('{id}', [SchedulingController::class, 'update'])->middleware('auth:sanctum');
+    Route::delete('{id}', [SchedulingController::class, 'delete'])->middleware('auth:sanctum');
 });

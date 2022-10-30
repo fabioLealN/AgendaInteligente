@@ -19,14 +19,14 @@ class Scheduling extends Model
     ];
 
     public function pet() {
-        $this->belongsTo(Pet::class);
+        return $this->belongsTo(Pet::class);
     }
 
     public function schedule() {
-        $this->belongsTo(Schedule::class);
+        return $this->belongsTo(Schedule::class);
     }
 
     public function typeScheduling() {
-        $this->belongsTo(TypeScheduling::class, 'type_scheduling_id');
+        return $this->belongsTo(TypeScheduling::class, 'type_scheduling_id');
     }
 }
