@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Breed;
 use App\Models\Pet;
 use App\Models\Size;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -68,7 +69,7 @@ class PetService
             $pet->size_id = $request->input('size_id');
             $pet->save();
 
-            return response()->json(['status' => 'Atualizado com sucesso!', 200]);
+            return response()->json(['data' => ['status' => 'Atualizado com sucesso!']], 200);
         }
         catch (ValidationException $e)
         {
