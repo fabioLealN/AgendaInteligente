@@ -14,7 +14,7 @@ class PetService
 {
     public function get(int $id)
     {
-        $pet = Pet::where('id', $id)->where('user_id', Auth::user()->id)->get()->toArray();
+        $pet = Pet::where('id', $id)->where('user_id', Auth::user()->id)->get()[0];
 
         if(!$pet) {
             throw ValidationException::withMessages(['Animal não encontrado']);

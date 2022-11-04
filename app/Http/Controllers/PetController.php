@@ -29,14 +29,9 @@ class PetController extends Controller
 
     public function get($id)
     {
-        try
-        {
-            return $this->petService->get($id);
-        }
-        catch (ValidationException $e)
-        {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
+
+        return response()->json(['data' => $this->petService->get($id)]);
+
     }
 
     public function store(Request $request)

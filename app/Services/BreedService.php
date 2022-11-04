@@ -11,24 +11,13 @@ class BreedService
 {
     public function get(int $id)
     {
-        $breed = Breed::find($id);
-
-        if(!!!$breed) {
-            throw ValidationException::withMessages(['Raça não encontrada.']);
-        }
-
-        return $breed;
+        return Breed::findOrFail($id);
     }
 
     public function getAll()
     {
-        $breeds = Breed::all();
 
-        if(!!!$breeds) {
-            throw ValidationException::withMessages(['Não há raças salvas.']);
-        }
-
-        return $breeds;
+        return Breed::all();
     }
 
     public function store(array $breedData)
