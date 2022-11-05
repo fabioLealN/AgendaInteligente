@@ -17,26 +17,15 @@ class BreedController extends Controller
 
     public function get($id)
     {
-        try
-        {
-            return $this->breedService->get($id);
-        }
-        catch (ValidationException $e)
-        {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
+        return response()->json(['data' => $this->breedService->get($id)]);
+
     }
 
     public function getAll()
     {
-        try
-        {
-            return $this->breedService->getAll();
-        }
-        catch (ValidationException $e)
-        {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
+
+        return response()->json(['data' => $this->breedService->getAll()]);
+
     }
 
     public function store(Request $request)

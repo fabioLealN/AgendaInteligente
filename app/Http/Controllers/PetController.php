@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePetRequest;
 use Illuminate\Http\Request;
 use App\Services\PetService;
 use Illuminate\Validation\ValidationException;
@@ -29,14 +30,9 @@ class PetController extends Controller
 
     public function get($id)
     {
-        try
-        {
-            return $this->petService->get($id);
-        }
-        catch (ValidationException $e)
-        {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
+
+        return response()->json(['data' => $this->petService->get($id)]);
+
     }
 
     public function store(Request $request)
@@ -48,10 +44,8 @@ class PetController extends Controller
         return $this->petService->store($petData);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePetRequest $request, $id)
     {
-        $this->validateData($request);
-
         return $this->petService->update($id, $request);
     }
 

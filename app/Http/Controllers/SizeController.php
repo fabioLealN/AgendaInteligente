@@ -7,11 +7,9 @@ use Illuminate\Validation\ValidationException;
 
 class SizeController extends Controller
 {
-    private $sizeService;
 
-    public function __construct(SizeService $sizeService)
+    public function __construct(private SizeService $sizeService)
     {
-        $this->sizeService = $sizeService;
     }
 
     public function get($id)
@@ -28,13 +26,6 @@ class SizeController extends Controller
 
     public function getAll()
     {
-        try
-        {
-            return $this->sizeService->getAll();
-        }
-        catch (ValidationException $e)
-        {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
+        return response()->json(['data' => $this->sizeService->getAll()]);
     }
 }
