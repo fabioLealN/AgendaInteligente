@@ -14,7 +14,7 @@ class PetService
 {
     public function get(int $id)
     {
-        $pet = Pet::where('id', $id)->where('user_id', Auth::user()->id)->get()->toArray();
+        $pet = Pet::where('id', $id)->where('user_id', Auth::user()->id)->get()[0];
 
         if(!$pet) {
             throw ValidationException::withMessages(['Animal não encontrado']);
@@ -55,9 +55,9 @@ class PetService
 
     public function update(int $id, Request $request)
     {
-        $pet = Pet::where('id', $id)->where('user_id', Auth::user()->id)->get();
+        $pet = Pet::findOrFail($id);
 
-        if(!!!$pet || $this->validateBreedAndSize($request->input('breed_id'), $request->input('size_id'))) {
+        if($this->validateBreedAndSize($request->input('breed_id'), $request->input('size_id'))) {
             return response()->json(['error' => 'Ocorreu um erro! Dados não encontrados.'], 404);
         }
 
@@ -77,11 +77,9 @@ class PetService
         }
     }
 
-    private function validateBreedAndSize(int $breed_id, int $size_id)
+    private function validateBreedAndSize(int $breed_id, int $size_id): void
     {
-        $breed = Breed::find($breed_id);
-        $size = Size::find($size_id);
-
-        return !!!$breed || !!!$size;
+        Breed::findOrFail($breed_id);
+        Size::findOrFail($size_id);
     }
 }

@@ -35,6 +35,6 @@ class Schedule extends Model
 
     public function schedulings()
     {
-        return $this->belongsTo(Scheduling::class);
+        return $this->hasOne(Scheduling::class);
     }
 }

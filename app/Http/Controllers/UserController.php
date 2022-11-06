@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -25,6 +26,12 @@ class UserController extends Controller
         {
             return response()->json(['error' => $e->getMessage()], 404);
         }
+    }
+
+    public function getPets(User $user)
+    {
+        $pets = $user->pets->load(['breed', 'size']);
+        return response()->json(['data' => $pets]);
     }
 
     public function update(Request $request) {
