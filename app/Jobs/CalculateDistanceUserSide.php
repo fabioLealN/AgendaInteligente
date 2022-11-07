@@ -47,6 +47,10 @@ class CalculateDistanceUserSide implements ShouldQueue
         $userLocation = Http::get($url);
         $collectionUserLocation = collect(json_decode($userLocation));
 
+        if (!!!$collectionUserLocation->first()) {
+            return;
+        }
+
         $userCoord = [
             $collectionUserLocation->first()->lat,
             $collectionUserLocation->first()->lon,
@@ -85,11 +89,19 @@ class CalculateDistanceUserSide implements ShouldQueue
                 ->getDistance())
                 ->first();
 
-            if ($distance > 101) {
+            if ($distance['km'] < 101) {
                 Distance::updateOrCreate(
                     ['user_id' => $user->id, 'ong_id' => $ong->id],
                     ['distance' => $distance['km']]
                 );
+            } else {
+                $distanceData = Distance::where('user_id', $user->id)
+                    ->where('ong_id', $ong->id)
+                    ->first();
+
+                if (!!$distanceData) {
+                    $distanceData->delete();
+                }
             }
         }
     }

@@ -6,12 +6,23 @@ use App\Jobs\CalculateDistanceOngSide;
 use App\Jobs\CalculateDistanceUserSide;
 use App\Models\Address;
 use App\Models\City;
-use App\Models\TypeUser;
+use App\Models\Ong;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class AddressService
 {
+    public function get(int $id)
+    {
+        $Address = Address::find($id);
+
+        if(!!!$Address) {
+            throw ValidationException::withMessages(['Endereço não encontrado.']);
+        }
+
+        return $Address;
+    }
+
     public function store(array $addressData)
     {
         $city = City::find($addressData['city_id']);
@@ -29,30 +40,31 @@ class AddressService
         }
     }
 
-    public function update(User $user, array $addressData)
+    public function update(int $id, array $addressData)
     {
-        $address = Address::find($user->address->id);
+        $address = Address::find($id);
         $city = City::find($addressData['city_id']);
 
         if (!!!$city || !!!$address) {
             return response()->json(['error' => 'Endereço não encontrado.'], 404);
         }
 
-        $address->city = $addressData['city_id'];
-        $address->neighborhood = $addressData['neighborhood'];
-        $address->street = $addressData['street'];
-        $address->number = $addressData['number'];
-        $address->cep = $addressData['cep'];
-
         try
         {
+            $address->city_id = $addressData['city_id'];
+            $address->neighborhood = $addressData['neighborhood'];
+            $address->street = $addressData['street'];
+            $address->number = $addressData['number'];
+            $address->cep = $addressData['cep'];
             $address->save();
 
+            $addressBelongsToUser = User::where('address_id',  $id)->first();
 
-            if ($user->type_user_id == TypeUser::TYPE_CLIENT) {
-                CalculateDistanceUserSide::dispatch($user->id);
+            if (!!$addressBelongsToUser) {
+                CalculateDistanceUserSide::dispatch($addressBelongsToUser->id);
             } else {
-                CalculateDistanceOngSide::dispatch($user->songs->first()->id);
+                $addressBelongsToOng = Ong::where('address_id',  $id)->first();
+                CalculateDistanceOngSide::dispatch($addressBelongsToOng->id);
             }
             return response()->json(['data' => ['status' => 'Atualizado com sucesso!']], 200);
         }
