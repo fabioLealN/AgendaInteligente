@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Services\AddressService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AddressController extends Controller
 {
@@ -15,6 +15,18 @@ class AddressController extends Controller
         $this->addressService = $addressService;
     }
 
+    public function get($id)
+    {
+        try
+        {
+            return $this->addressService->get($id);
+        }
+        catch (ValidationException $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+    }
+
     public function store(Request $request) {
         $this->validateData($request);
 
@@ -23,13 +35,12 @@ class AddressController extends Controller
         return $this->addressService->store($addressData);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
         $this->validateData($request);
 
-        $user = User::find($request->user()->id);
         $addressData = $request->only('city_id', 'neighborhood', 'street', 'number', 'cep');
 
-        return $this->addressService->update($user, $addressData);
+        return $this->addressService->update($id, $addressData);
     }
 
     public function delete(int $id)

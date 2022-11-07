@@ -156,7 +156,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Cachorro\",\r\n    \"birth_date\": \"2022-01-01\",\r\n    \"breed_id\": 1,\r\n    \"size_id\": 1\r\n}",
+							"raw": "{\r\n    \"name\": \"Cachorro2\",\r\n    \"birth_date\": \"2022-01-01\",\r\n    \"breed_id\": 1,\r\n    \"size_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1254,9 +1254,377 @@
 			]
 		},
 		{
+			"name": "Agendamentos",
+			"item": [
+				{
+					"name": "Get Agendamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "4|jmzR3ExpNoJOBKjSMFPDb4HN5o4k8OOd1euKeWHM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/schedulings/50",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"schedulings",
+								"50"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Agendamentos Futuros",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ongs_ids\": [1, 2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/schedulings/next-schedulings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"schedulings",
+								"next-schedulings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Todos Agendamentos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ongs_ids\": [1, 2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/schedulings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"schedulings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nova Agendamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\" : \"Agendamento Teste2.\",\r\n    \"pet_id\": 18,\r\n    \"schedule_id\": 1,\r\n    \"type_scheduling_id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/schedulings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"schedulings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Agendamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\" : \"Atualização Teste3.\",\r\n    \"schedule_id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/schedulings/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"schedulings",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Agendamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/schedulings/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"schedulings",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Endereços",
+			"item": [
+				{
+					"name": "Get Endereço",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/addresses/60000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"addresses",
+								"60000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Endereço",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city_id\": 4320008,\r\n    \"neighborhood\": \"Centro\",\r\n    \"street\": \"Rua João Pereira de Vargas\",\r\n    \"number\": \"1400\",\r\n    \"cep\": \"99000999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/addresses/242",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"addresses",
+								"242"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Registro Novo Usuário",
 			"request": {
-				"method": "POST",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|B0VpojJMUitZgbWjSCEDNtlqD4XqsDwimoRtqiZJ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Accept",
@@ -1266,7 +1634,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Euzinho\",\r\n    \"phone\": \"(00) 9 1111-0000\",\r\n    \"email\": \"teste@teste.com\",\r\n    \"password\": \"123Aa456*p\",\r\n    \"password_confirmation\": \"123Aa456*p\",\r\n    \"type_user_id\": 1,\r\n    \"city_id\": 1100015,\r\n    \"neighborhood\": \"São José\",\r\n    \"street\": \"Rua Tal\",\r\n    \"number\": \"123\",\r\n    \"cep\": \"99000999\"\r\n}",
+					"raw": "{\r\n    \"name\": \"teste com ONG\",\r\n    \"phone\": \"(00) 9 1111-0000\",\r\n    \"email\": \"ong@teste.com\",\r\n    \"password\": \"123Aa456*p\",\r\n    \"password_confirmation\": \"123Aa456*p\",\r\n    \"type_user_id\": 1,\r\n    \"city_id\": 1100015,\r\n    \"neighborhood\": \"São José\",\r\n    \"street\": \"Rua Tal\",\r\n    \"number\": \"123\",\r\n    \"cep\": \"99000999\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1274,7 +1642,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8888/api/auth/register",
+					"raw": "http://localhost:8888/api/user/update",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1282,8 +1650,8 @@
 					"port": "8888",
 					"path": [
 						"api",
-						"auth",
-						"register"
+						"user",
+						"update"
 					]
 				}
 			},
@@ -1302,7 +1670,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"teste@teste.com\",\r\n    \"password\": \"123Aa456*p\"\r\n}",
+					"raw": "{\r\n    \"email\": \"ong@teste.com\",\r\n    \"password\": \"123Aa456*p\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1372,6 +1740,48 @@
 						"api",
 						"auth",
 						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inicia Execução da Fila",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/run-artisan/queue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"run-artisan",
+						"queue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seed para Produção",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/run-artisan/seed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"run-artisan",
+						"seed"
 					]
 				}
 			},

@@ -46,6 +46,10 @@ class CalculateDistanceOngSide implements ShouldQueue
         $ongLocation = Http::get($url);
         $collectionOngLocation = collect(json_decode($ongLocation));
 
+        if (!!!$collectionOngLocation->first()) {
+            return;
+        }
+
         $ongCoord = [
             $collectionOngLocation->first()->lat,
             $collectionOngLocation->first()->lon,
@@ -84,11 +88,19 @@ class CalculateDistanceOngSide implements ShouldQueue
                 ->getDistance())
                 ->first();
 
-            if ($distance > 101) {
+            if ($distance['km'] < 101) {
                 Distance::updateOrCreate(
                     ['user_id' => $user->id, 'ong_id' => $ong->id],
                     ['distance' => $distance['km']]
                 );
+            } else {
+                $distanceData = Distance::where('user_id', $user->id)
+                    ->where('ong_id', $ong->id)
+                    ->first();
+
+                if (!!$distanceData) {
+                    $distanceData->delete();
+                }
             }
         }
     }
