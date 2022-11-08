@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Ong;
 use App\Models\Speciality;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -33,9 +35,24 @@ class SpecialityService
 
     public function getOngs($specialityId)
     {
-        $ongs = Speciality::find($specialityId)->ongs;
-        $ongs->load('address');
-        $ongs->load('distances');
+        $ongs = Ong::with('specialities')
+            ->whereRelation('specialities', 'specialities.id', $specialityId)
+            ->with('distances')
+            ->whereRelation('distances', 'user_id', Auth::user()->id)
+            ->with('address')
+            ->get();
+
+        if (!!!$ongs->first()) {
+            $ongs = Ong::with('specialities')
+            ->whereRelation('specialities', 'specialities.id', $specialityId)
+            ->with('address')
+            ->whereRelation('address', 'city_id', Auth::user()->address->city_id)
+            ->get();
+        }
+
+        if (!!!$ongs->first()) {
+            return response()->json(['error' => 'Nenhuma ONG próxima encontrada.'], 404);
+        }
 
         return response()->json(['data' => $ongs]);
     }

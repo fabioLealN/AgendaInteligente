@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Auth\Api\LoginController;
 use App\Http\Controllers\Auth\Api\RegisterController;
 use App\Http\Controllers\BreedController;
@@ -11,7 +12,9 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\TypeSchedulingController;
 use App\Http\Controllers\UserController;
+use Database\Seeders\DatabaseSeederProduction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,11 +22,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('run-artisan')->group(function () {
+    Route::get('queue', function () {
+        Artisan::call('queue:work');
+    });
+    Route::get('seed', [DatabaseSeederProduction::class, 'run']);
+});
+
 Route::prefix('auth')->group(function () {
     Route::post('register', [RegisterController::class, 'register']);
     Route::post('login', [LoginController::class, 'login']);
-    Route::post('logout', [LoginController::class, 'logout'])
-        ->middleware('auth:sanctum');
+    Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 });
 
 Route::prefix('user')->group(function () {
@@ -87,4 +96,9 @@ Route::prefix('schedulings')->group(function () {
     Route::post('/', [SchedulingController::class, 'store'])->middleware('auth:sanctum');
     Route::put('{id}', [SchedulingController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('{id}', [SchedulingController::class, 'delete'])->middleware('auth:sanctum');
+});
+
+Route::prefix('addresses')->group(function () {
+    Route::get('{id}', [AddressController::class, 'get'])->middleware('auth:sanctum');
+    Route::put('{id}', [AddressController::class, 'update'])->middleware('auth:sanctum');
 });
