@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ong;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;

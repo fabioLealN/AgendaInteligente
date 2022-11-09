@@ -80,6 +80,7 @@ class SchedulingService
             DB::beginTransaction();
                 $scheduling = Scheduling::create($schedulingData);
                 $scheduling->load('pet');
+                $scheduling->load('ong');
                 $scheduling->load('schedule');
                 $scheduling->load('typeScheduling');
                 $scheduling->load('schedule.users');

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ong;
 use App\Models\Pet;
 use App\Models\Schedule;
 use App\Models\Scheduling;
@@ -26,6 +27,7 @@ class SchedulingSeeder extends Seeder
             'description' => fake('pt_BR')->text(),
             'pet_id' => Pet::first()->id,
             'schedule_id' => $schedule->id,
+            'ong_id' => Ong::first()->id,
             'type_scheduling_id' => TypeScheduling::first()->id,
         ];
 

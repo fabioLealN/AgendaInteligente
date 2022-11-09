@@ -11,15 +11,14 @@ class Scheduling extends Model
 
     protected $table = 'schedulings';
 
-    protected $fillable = [
-        'description',
-        'pet_id',
-        'schedule_id',
-        'type_scheduling_id'
-    ];
+    protected $guarded = [];
 
     public function pet() {
         return $this->belongsTo(Pet::class);
+    }
+
+    public function ong() {
+        return $this->belongsTo(Ong::class);
     }
 
     public function schedule() {

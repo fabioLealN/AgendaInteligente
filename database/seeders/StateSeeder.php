@@ -26,7 +26,6 @@ class StateSeeder extends Seeder
         })->toArray();
 
         foreach ($states as $state) {
-            print($state['id']);
             State::create([
                 'id' => $state['id'],
                 'name' => $state['name'],

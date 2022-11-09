@@ -60,6 +60,7 @@ class SchedulingController extends Controller
         $request->validate([
             'description' => ['string', 'nullable'],
             'pet_id' => ['required', 'integer'],
+            'ong_id' => ['required', 'integer'],
             'schedule_id' => ['required', 'integer'],
             'type_scheduling_id' => ['required', 'integer'],
         ]);
@@ -69,6 +70,7 @@ class SchedulingController extends Controller
             'pet_id',
             'schedule_id',
             'type_scheduling_id',
+            'ong_id',
         );
 
         try
