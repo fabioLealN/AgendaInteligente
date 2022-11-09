@@ -21,9 +21,11 @@ return new class extends Migration
             $table->string('description');
             $table->unsignedBigInteger('pet_id');
             $table->unsignedBigInteger('schedule_id');
+            $table->unsignedBigInteger('ong_id');
             $table->unsignedBigInteger('type_scheduling_id');
             $table->timestamps();
 
+            $table->foreign('ong_id')->references('id')->on('ongs');
             $table->foreign('pet_id')->references('id')->on('pets');
             $table->foreign('schedule_id')->references('id')->on('schedules');
             $table->foreign('type_scheduling_id')->references('id')->on('types_schedulings');

@@ -30,13 +30,11 @@ class ScheduleController extends Controller
 
     public function getAllAvailable(Request $request)
     {
-        $request->validate([
-            'ongs_ids' => ['required', 'array']
-        ]);
+        $request->validate(['ong_id' => ['required']]);
 
         try
         {
-            return $this->scheduleService->getAllAvailable($request->input('ongs_ids'));
+            return response()->json(['data' => $this->scheduleService->getAllAvailable($request->input('ong_id'))]);
         }
         catch (ValidationException $e)
         {

@@ -30,15 +30,16 @@ class ScheduleService
     }
 
 
-    public function getAllAvailable(array $ongsIds)
+    public function getAllAvailable(string $ongsIds)
     {
         $schedules = Schedule::where('available', true)
             ->with('users')
             ->with('users.ongs')
             ->whereRelation('users.ongs',
                 function (Builder $query) use ($ongsIds) {
-                    $query->whereIn('ongs.id', $ongsIds);
+                    $query->where('ongs.id', '=', $ongsIds);
                 })
+            ->orderBy('start_time')
             ->get()
             ->toArray();
 

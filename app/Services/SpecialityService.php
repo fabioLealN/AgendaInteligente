@@ -35,6 +35,12 @@ class SpecialityService
 
     public function getOngs($specialityId)
     {
+        $speciality = Speciality::findOrFail($specialityId);
+        $ongs = $speciality->ongs;
+        $data = $ongs->load('address');
+
+        return response()->json(['data' => $data]);
+
         $ongs = Ong::with('specialities')
             ->whereRelation('specialities', 'specialities.id', $specialityId)
             ->with('distances')
