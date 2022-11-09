@@ -17,14 +17,17 @@ class SpecialitySeeder extends Seeder
     {
         $specialities = [
             [
+                'icon' => 'vaccines',
                 'name' => 'Castração',
                 'description' => 'Procedimento cirurgíco em animais para evitar a procriação.'
             ],
             [
+                'icon' => 'shower',
                 'name' => 'Banho e Tosa',
                 'description' => 'Processo de corte de pelos e higienização do animal.'
             ],
             [
+                'icon' => 'medical_information',
                 'name' => 'Exame',
                 'description' => 'Consulta com especialista para avaliar e definar tratamentos.'
             ],
@@ -32,6 +35,7 @@ class SpecialitySeeder extends Seeder
 
         foreach ($specialities as $speciality) {
             Speciality::create([
+                'icon' => $speciality['icon'],
                 'name' => $speciality['name'],
                 'description' => $speciality['description'],
             ]);
