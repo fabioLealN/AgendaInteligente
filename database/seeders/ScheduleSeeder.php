@@ -22,21 +22,18 @@ class ScheduleSeeder extends Seeder
                 'date' => Carbon::createFromDate(2022, 10, 17),
                 'start_time' => Carbon::create(2022, 10, 17, 8, 0, 0),
                 'end_time' => Carbon::create(2022, 10, 17, 8, 00, 0)->addMinutes(60),
-                'interval_time' => Carbon::create(2022, 10, 17, 8, 0, 0)->addMinutes(70),
                 'available' => true,
             ],
             [
                 'date' => Carbon::createFromDate(2022, 10, 17),
                 'start_time' => Carbon::create(2022, 10, 17, 9, 10, 0),
                 'end_time' => Carbon::create(2022, 10, 17, 9, 10, 0)->addMinutes(60),
-                'interval_time' => Carbon::create(2022, 10, 17, 9, 10, 0)->addMinutes(70),
                 'available' => true,
             ],
             [
                 'date' => Carbon::createFromDate(2022, 10, 17),
                 'start_time' => Carbon::create(2022, 10, 17, 10, 20, 0),
                 'end_time' => Carbon::create(2022, 10, 17, 10, 20, 0)->addMinutes(60),
-                'interval_time' => Carbon::create(2022, 10, 17, 10, 20, 0)->addMinutes(70),
                 'available' => true,
             ],
         ];

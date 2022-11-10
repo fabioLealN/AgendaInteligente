@@ -16,14 +16,12 @@ class Schedule extends Model
         'date',
         'start_time',
         'end_time',
-        'interval_time',
         'available'
     ];
 
     protected $casts = [
         'start_time' => 'datetime:H:i',
         'end_time' => 'datetime:H:i',
-        'interval_time' => 'datetime:H:i',
         'available' => 'boolean'
 
     ];
