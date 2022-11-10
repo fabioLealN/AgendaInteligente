@@ -54,7 +54,7 @@ class ScheduleService
     public function store(array $scheduleData)
     {
         $arrayDate = $this->defineArrayDate($scheduleData['start_date'], $scheduleData['end_date']);
-        $arraySchedule = $this->defineArraySchedule($scheduleData['start_time'], $scheduleData['end_time'], $scheduleData['interval']);
+        $arraySchedule = $this->defineArraySchedule($scheduleData['start_time'], $scheduleData['end_time'], $scheduleData['duration']);
         $response = [];
 
         try
@@ -70,7 +70,6 @@ class ScheduleService
                             'date' => $date,
                             'start_time' => $schedule['start_schedule'],
                             'end_time' => $schedule['end_schedule'],
-                            'interval_time' => Carbon::createFromTimeString($scheduleData['interval']),
                             'available' => true,
                         ]);
 
@@ -144,7 +143,7 @@ class ScheduleService
     }
 
 
-    private function defineArraySchedule($startTimeRange, $endTimeRange, $interval)
+    private function defineArraySchedule($startTimeRange, $endTimeRange, $duration)
     {
         $finalDay = Carbon::createFromTimeString($endTimeRange);
         $stopLoop = true;
@@ -152,15 +151,15 @@ class ScheduleService
 
         do {
             $initialDay = Carbon::createFromTimeString($startTimeRange);
-            $finalSchedule = $initialDay->addMinutes($this->transformTimeToMinutes($interval));
+            $finalSchedule = $initialDay->addMinutes($this->transformTimeToMinutes($duration));
 
             if ($finalSchedule <= $finalDay) {
                 $start = Carbon::createFromTimeString(
-                        $finalSchedule->subMinutes($this->transformTimeToMinutes($interval))->toTimeString()
+                        $finalSchedule->subMinutes($this->transformTimeToMinutes($duration))->toTimeString()
                     );
 
                 $end = Carbon::createFromTimeString(
-                        $finalSchedule->addMinutes($this->transformTimeToMinutes($interval))->toTimeString()
+                        $finalSchedule->addMinutes($this->transformTimeToMinutes($duration))->toTimeString()
                     );
 
                 array_push($arraySchedule, [

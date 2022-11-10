@@ -48,7 +48,7 @@ class ScheduleController extends Controller
         $request->validate([
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
-            'interval' => ['required'],
+            'duration' => ['required'],
             'start_time' => ['required'],
             'end_time' => ['required'],
             'days_week' => ['array', 'nullable'],
@@ -58,7 +58,7 @@ class ScheduleController extends Controller
         $scheduleData = $request->only(
             'start_date',
             'end_date',
-            'interval',
+            'duration',
             'start_time',
             'end_time',
             'days_week',
