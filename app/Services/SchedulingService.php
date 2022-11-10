@@ -6,6 +6,7 @@ use App\Models\Pet;
 use App\Models\Schedule;
 use App\Models\Scheduling;
 use App\Models\TypeScheduling;
+use App\Models\User;
 use BadMethodCallException;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -32,43 +33,21 @@ class SchedulingService
 
     public function getAll()
     {
-        $schedulings = Scheduling::with('pet')
-            ->with('schedule')
-            ->with('typeScheduling')
-            ->with('schedule.users')
-            ->whereRelation('pet', 'user_id', Auth::user()->id)
-            ->get();
-
-        if(!$schedulings->toArray()) {
-            throw ValidationException::withMessages(['Não há agendas salvas.']);
-        }
-
-        return $schedulings;
+        $user = User::find(Auth::user()->id);
+        return $user->schedulings()->with(["typeScheduling", "schedule.users"])->paginate();
     }
 
 
     public function getFutureSchedulings()
     {
-        $schedulings = Scheduling::with('pet')
-            ->with('schedule')
-            ->with('typeScheduling')
-            ->with('schedule.users')
-            ->whereRelation('pet', 'user_id', Auth::user()->id)
-            ->whereRelation('schedule', 'date', '>=', Carbon::today('America/Sao_Paulo')->format('Y-m-d'))
-            ->get()
-            ->filter(function ($scheduling) {
-                if ($scheduling->schedule->date == Carbon::today('America/Sao_Paulo')->format('Y-m-d')) {
-                    return $scheduling->schedule->start_time->format('H:i') >= Carbon::now('America/Sao_Paulo')->format('H:i');
-                }
+        $user = User::find(Auth::user()->id);
 
-                return true;
-            });
-
-        if(!$schedulings->toArray()) {
-            throw ValidationException::withMessages(['Não há agendas salvas.']);
-        }
-
-        return $schedulings;
+        return $user->schedulings()
+                ->with(["typeScheduling","schedule.users", "pet", "pet.breed", "pet.size"])
+                ->get()
+                ->sortBy([["date", "asc"], ["hour", "asc"]])
+                ->take(5)
+                ->values();
     }
 
 
@@ -90,6 +69,7 @@ class SchedulingService
             DB::commit();
 
             return response()->json(['data' => ['scheduling' => $scheduling]], 201);
+            // return response()->json(['data' => ['scheduling' => $scheduling]], 201);
         }
         catch (BadMethodCallException | ValidationException $e)
         {

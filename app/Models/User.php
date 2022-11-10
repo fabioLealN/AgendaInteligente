@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Schedule::class, 'users_schedules')->using(UserSchedule::class);
     }
 
+    public function schedulings()
+    {
+        return $this->hasManyThrough(Scheduling::class, Pet::class);
+    }
+
     public function address()
     {
         return $this->belongsTo(Address::class);

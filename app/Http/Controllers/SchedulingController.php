@@ -33,7 +33,7 @@ class SchedulingController extends Controller
     {
         try
         {
-            return $this->schedulingService->getAll();
+            return response()->json(['data' => $this->schedulingService->getAll()]);
         }
         catch (ValidationException $e)
         {
@@ -46,7 +46,7 @@ class SchedulingController extends Controller
     {
         try
         {
-            return $this->schedulingService->getFutureSchedulings();
+            return response()->json(['data' => $this->schedulingService->getFutureSchedulings()]);
         }
         catch (ValidationException $e)
         {
