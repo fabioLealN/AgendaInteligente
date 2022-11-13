@@ -26,6 +26,11 @@ Route::prefix('run-artisan')->group(function () {
     Route::get('queue', function () {
         Artisan::call('queue:work');
     });
+
+    Route::get('schedule', function () {
+        Artisan::call('schedule:work');
+    });
+
     Route::get('seed', [DatabaseSeederProduction::class, 'run']);
 });
 

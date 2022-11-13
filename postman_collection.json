@@ -155,8 +155,34 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Cachorro2\",\r\n    \"birth_date\": \"2022-01-01\",\r\n    \"breed_id\": 1,\r\n    \"size_id\": 1\r\n}",
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Cachorro Foto",
+									"type": "default"
+								},
+								{
+									"key": "birth_date",
+									"value": "2022-01-01",
+									"type": "default"
+								},
+								{
+									"key": "breed_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "size_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/fleal/OneDrive/Área de Trabalho/download.jpg"
+								}
+							],
 							"options": {
 								"raw": {
 									"language": "json"
@@ -202,7 +228,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Cachorro Atualizado2\",\r\n    \"birth_date\": \"2022-02-27\",\r\n    \"breed_id\": 1,\r\n    \"size_id\": 1\r\n}",
+							"raw": "{\r\n    \"name\": \"Cachorro Atualizado2\",\r\n    \"birth_date\": \"2022-02-27\",\r\n    \"breed_id\": 1,\r\n    \"size_id\": 1,\r\n    \"image\": null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -210,7 +236,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8888/api/pets/16",
+							"raw": "http://localhost:8888/api/pets/21",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -219,7 +245,7 @@
 							"path": [
 								"api",
 								"pets",
-								"16"
+								"21"
 							]
 						}
 					},
@@ -326,8 +352,55 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"ONG endereço\",\r\n    \"specialities_ids\": [2, 3],\r\n    \"city_id\": 4320008,\r\n    \"neighborhood\": \"Lomba da Palmeira\",\r\n    \"street\": \"Rua Justino Camboim\",\r\n    \"number\": \"250\",\r\n    \"cep\": \"99000999\"\r\n}",
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/fleal/OneDrive/Área de Trabalho/download.jpg"
+								},
+								{
+									"key": "name",
+									"value": "ONG foto",
+									"type": "text"
+								},
+								{
+									"key": "city_id",
+									"value": "4320008",
+									"type": "text"
+								},
+								{
+									"key": "neighborhood",
+									"value": "Lomba da Palmeira",
+									"type": "text"
+								},
+								{
+									"key": "street",
+									"value": "Rua Justino Camboim",
+									"type": "text"
+								},
+								{
+									"key": "number",
+									"value": "250",
+									"type": "text"
+								},
+								{
+									"key": "cep",
+									"value": "99000999",
+									"type": "text"
+								},
+								{
+									"key": "specialities_ids[0]",
+									"value": "2",
+									"contentType": "",
+									"type": "default"
+								},
+								{
+									"key": "specialities_ids[1]",
+									"value": "3",
+									"type": "default"
+								}
+							],
 							"options": {
 								"raw": {
 									"language": "json"
@@ -373,7 +446,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"ONG 3.1\",\r\n    \"specialities_ids\": [2, 3]\r\n}",
+							"raw": "{\r\n    \"name\": \"ONG 3.1\",\r\n    \"specialities_ids\": [2, 3],\r\n    \"image\": null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -381,7 +454,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8888/api/ongs/8",
+							"raw": "http://localhost:8888/api/ongs/36",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -390,7 +463,7 @@
 							"path": [
 								"api",
 								"ongs",
-								"8"
+								"36"
 							]
 						}
 					},
@@ -1182,7 +1255,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"start_date\" : \"2022-01-01\",\r\n    \"end_date\": \"2022-01-10\",\r\n    \"interval\": \"01:00\",\r\n    \"start_time\": \"08:00\",\r\n    \"end_time\": \"12:00\",\r\n    \"days_week\": [\"qua\"],\r\n    \"users_ids\": [8]\r\n}",
+							"raw": "{\r\n    \"start_date\" : \"2022-11-01\",\r\n    \"end_date\": \"2022-11-10\",\r\n    \"duration\": \"01:00\",\r\n    \"start_time\": \"08:00\",\r\n    \"end_time\": \"12:00\",\r\n    \"days_week\": [\"qua\"],\r\n    \"users_ids\": [8]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
