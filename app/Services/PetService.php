@@ -8,6 +8,7 @@ use App\Models\Size;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class PetService
@@ -19,6 +20,8 @@ class PetService
         if(!$pet) {
             throw ValidationException::withMessages(['Animal não encontrado']);
         }
+
+        $pet->image = $pet->image_url;
 
         return $pet;
     }
@@ -33,7 +36,7 @@ class PetService
             throw ValidationException::withMessages(['Não há animais salvos.']);
         }
 
-        return response()->json(['data' => $pets]);
+        return response()->json(['data' => $pets->each(fn ($pet) => $pet->image = $pet->image_url)]);
     }
 
     public function store(array $petData)
@@ -46,6 +49,9 @@ class PetService
 
         try  {
             $pet = Pet::create($petData);
+
+            $pet->image = $pet->image_url;
+
             return response()->json(['data' => ['pet' => $pet]], 201);
 
         } catch (ValidationException $e) {
@@ -61,12 +67,23 @@ class PetService
             return response()->json(['error' => 'Ocorreu um erro! Dados não encontrados.'], 404);
         }
 
+        $image_source = null;
+        if ($request->hasFile('image')) {
+            $image_source = $request->file('image')->store('ongs');
+        }
+
         try
         {
             $pet->name = $request->input('name');
             $pet->birth_date = $request->input('birth_date');
             $pet->breed_id = $request->input('breed_id');
             $pet->size_id = $request->input('size_id');
+
+            if ($pet->image) {
+                Storage::delete($pet->image);
+            }
+            $pet->image = $image_source;
+
             $pet->save();
 
             return response()->json(['data' => ['status' => 'Atualizado com sucesso!']], 200);

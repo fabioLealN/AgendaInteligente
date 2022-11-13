@@ -8,6 +8,7 @@ use App\Models\Speciality;
 use BadMethodCallException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class OngService
@@ -31,7 +32,7 @@ class OngService
             throw ValidationException::withMessages(['Não há ONGs salvas.']);
         }
 
-        return $ongs;
+        return response()->json(['data' => $ongs->each(fn ($ong) => $ong->image = $ong->image_url)]);
     }
 
     public function store(array $ongData)
@@ -50,6 +51,8 @@ class OngService
 
             CalculateDistanceOngSide::dispatch($ong->id);
 
+            $ong->image = $ong->image_url;
+
             return response()->json(['data' => ['ong' => $ong]], 201);
         }
         catch (BadMethodCallException | ValidationException $e)
@@ -67,11 +70,22 @@ class OngService
             return response()->json(['error' => 'ONG ou Especialidade(s) não encontrada(s).'], 404);
         }
 
+        $image_source = null;
+        if ($request->hasFile('image')) {
+            $image_source = $request->file('image')->store('ongs');
+        }
+
         try  {
             DB::beginTransaction();
                 $ong->name = $request->input('name');
                 $ong->specialities()->detach();
                 $ong->specialities()->attach($request->input('specialities_ids'));
+
+                if ($ong->image) {
+                    Storage::delete($ong->image);
+                }
+                $ong->image = $image_source;
+
                 $ong->save();
             DB::commit();
 
