@@ -44,7 +44,13 @@ class OngController extends Controller
         $request->validate([
             'name' => ['required', 'string'],
             'specialities_ids' => ['required', 'array'],
+            'image' => ['nullable', 'image']
         ]);
+
+        $image_source = null;
+        if ($request->hasFile('image')) {
+            $image_source = $request->file('image')->store('ongs');
+        }
 
         try
         {
@@ -52,6 +58,7 @@ class OngController extends Controller
 
             $ongData = $request->only('name', 'specialities_ids');
             $ongData['address_id'] = $address->id;
+            $ongData['image'] = $image_source;
 
             return $this->ongService->store($ongData);
         }
@@ -67,6 +74,7 @@ class OngController extends Controller
         $request->validate([
             'name' => ['required', 'string'],
             'specialities_ids' => ['required', 'array'],
+            'image' => ['nullable', 'image']
         ]);
 
         return $this->ongService->update($id, $request);

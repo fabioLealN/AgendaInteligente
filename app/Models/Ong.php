@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Ong extends Model
 {
@@ -13,8 +14,18 @@ class Ong extends Model
 
     protected $fillable = [
         'name',
-        'address_id'
+        'address_id',
+        'image'
     ];
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return Storage::url($this->image);
+        }
+
+        return Storage::url('no-image.png');
+    }
 
     public function users()
     {

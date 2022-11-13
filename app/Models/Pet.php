@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Pet extends Model
 {
@@ -17,7 +18,17 @@ class Pet extends Model
         'user_id',
         'breed_id',
         'size_id',
+        'image'
     ];
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return Storage::url($this->image);
+        }
+
+        return Storage::url('no-image.png');
+    }
 
     public function user()
     {

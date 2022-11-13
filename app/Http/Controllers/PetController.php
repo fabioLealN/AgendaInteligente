@@ -39,7 +39,13 @@ class PetController extends Controller
     {
         $this->validateData($request);
 
+        $image_source = null;
+        if ($request->hasFile('image')) {
+            $image_source = $request->file('image')->store('ongs');
+        }
+
         $petData = $request->only('name', 'birth_date', 'breed_id', 'size_id');
+        $petData['image'] = $image_source;
 
         return $this->petService->store($petData);
     }
@@ -56,6 +62,7 @@ class PetController extends Controller
             'birth_date' => ['required', 'date'],
             'breed_id' => ['required', 'integer'],
             'size_id' => ['required', 'integer'],
+            'image' => ['nullable', 'image']
         ]);
     }
 }
