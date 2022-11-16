@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Distance::class);
     }
+
+    public function specialities()
+    {
+        return $this->belongsToMany(Speciality::class, 'user_specialities')->using(UserSpeciality::class);
+    }
 }

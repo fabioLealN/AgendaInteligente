@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ong;
 use App\Services\OngService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -37,6 +38,21 @@ class OngController extends Controller
         {
             return response()->json(['error' => $e->getMessage()], 404);
         }
+    }
+
+    
+    public function getSpecialists(Ong $ong)
+    {
+        $data = $ong->users->load('schedules');
+        return response()->json(['data' => $data]);
+    }
+    
+    public function getSpecialities(Ong $ong)
+    {
+        $data = $ong->specialities()->with(['users', 'users.ongs' => function ($q) use($ong){
+            $q->where('id', $ong->id);
+        }])->get();
+        return response()->json(['data' => $data]);
     }
 
     public function store(Request $request, AddressController $addressController)
