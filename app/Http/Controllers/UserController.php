@@ -42,4 +42,5 @@ class UserController extends Controller
 
         return $this->userService->update($request);
     }
+
 }
