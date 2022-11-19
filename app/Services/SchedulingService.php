@@ -69,7 +69,6 @@ class SchedulingService
             DB::commit();
 
             return response()->json(['data' => ['scheduling' => $scheduling]], 201);
-            // return response()->json(['data' => ['scheduling' => $scheduling]], 201);
         }
         catch (BadMethodCallException | ValidationException $e)
         {

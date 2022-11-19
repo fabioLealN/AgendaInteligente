@@ -3,7 +3,11 @@
 namespace App\Services;
 
 use App\Jobs\CalculateDistanceUserSide;
+use App\Models\Ong;
+use App\Models\Speciality;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -20,17 +24,35 @@ class UserService
         return $user;
     }
 
-    public function store(array $userData)
+    public function store(array $userData, ?array $ongsIds, ?array $specialitiesIds)
     {
         $userData['password'] = bcrypt($userData['password']);
+        $specialities = new Collection();
 
         try  {
+            if (!is_null($ongsIds) && !is_null($specialitiesIds)) {
+                foreach ($ongsIds as $ongId) {
+                    Ong::findOrFail($ongId);
+                }
+
+
+                foreach ($specialitiesIds as $specialityId) {
+                    Speciality::findOrFail($specialityId);
+                    $specialities->push(Speciality::find($specialityId));
+                }
+            }
+
             $user = User::create($userData);
+            $user->specialities()->attach($specialitiesIds);
+            $user->ongs()->attach($ongsIds);
+            $specialities->each(fn ($speciality) => $speciality->ongs()->syncWithoutDetaching($ongsIds));
+
             CalculateDistanceUserSide::dispatch($user->id);
 
             return response()->json(['data' => ['user' => $user]], 201);
-        } catch (ValidationException $e) {
-            return response()->json(['error' => $e->getMessage(), 422]);
+
+        } catch (ValidationException | ModelNotFoundException $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
         }
     }
 

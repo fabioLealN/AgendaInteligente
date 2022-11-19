@@ -40,20 +40,20 @@ class OngController extends Controller
         }
     }
 
-    
+
     public function getSpecialists(Ong $ong)
     {
-        $data = $ong->users->load('schedules');
+        $data = $ong->specialities->load('users');
         return response()->json(['data' => $data]);
     }
-    
-    public function getSpecialities(Ong $ong)
-    {
-        $data = $ong->specialities()->with(['users', 'users.ongs' => function ($q) use($ong){
-            $q->where('id', $ong->id);
-        }])->get();
-        return response()->json(['data' => $data]);
-    }
+
+    // public function getSpecialities(Ong $ong)
+    // {
+    //     $data = $ong->specialities()->with(['users', 'users.ongs' => function ($q) use($ong){
+    //         $q->where('id', $ong->id);
+    //     }])->get();
+    //     return response()->json(['data' => $data]);
+    // }
 
     public function store(Request $request, AddressController $addressController)
     {
