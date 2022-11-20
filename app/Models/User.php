@@ -69,6 +69,6 @@ class User extends Authenticatable
 
     public function specialities()
     {
-        return $this->belongsToMany(Speciality::class, 'user_specialities')->using(UserSpeciality::class);
+        return $this->belongsToMany(Speciality::class, 'user_specialities')->using(UserSpeciality::class)->withPivot('id');
     }
 }

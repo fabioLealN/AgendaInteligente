@@ -15,12 +15,10 @@ return new class extends Migration
     {
         Schema::create('user_specialities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('speciality_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('speciality_id')->references('id')->on('specialities');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');;
+            $table->foreignId('speciality_id')->constrained()->onDelete('cascade');
         });
     }
 
