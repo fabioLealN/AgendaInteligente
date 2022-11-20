@@ -1,11 +1,10 @@
 {
     "build": {
         "builder": "DOCKERFILE",
-        "dockerfilePath": "Dockerfile",
-        "buildCommand": "echo building!"
+        "dockerfilePath": "Dockerfile"
     },
     "deploy": {
-        "startCommand": "composer install",
+        "startCommand": "echo teste / echo outro teste",
         "restartPolicyType": "ON_FAILURE",
         "restartPolicyMaxRetries": 10
     }
