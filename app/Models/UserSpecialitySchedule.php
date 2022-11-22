@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserSchedule extends Pivot
+class UserSpecialitySchedule extends Pivot
 {
     public $incrementing = true;
 }

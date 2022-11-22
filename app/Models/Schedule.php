@@ -26,9 +26,10 @@ class Schedule extends Model
 
     ];
 
-    public function users()
+    public function specialists()
     {
-        return $this->belongsToMany(User::class, 'users_schedules')->using(UserSchedule::class);
+        return $this->belongsToMany(UserSpeciality::class, 'user_speciality_schedule', 'schedule_id', 'user_speciality_id')->using(UserSpecialitySchedule::class);
+
     }
 
     public function schedulings()

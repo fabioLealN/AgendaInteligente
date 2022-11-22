@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\State;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
+use File;
 
 class StateSeeder extends Seeder
 {
@@ -15,8 +16,8 @@ class StateSeeder extends Seeder
      */
     public function run()
     {
-        $response = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
-
+        // $response = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
+        $response = File::get("database/data/country.json");
         $states = collect(json_decode($response))->map(function ($state) {
             return [
                 'id' => $state->id,

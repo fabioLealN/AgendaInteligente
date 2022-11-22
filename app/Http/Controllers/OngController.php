@@ -48,6 +48,12 @@ class OngController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    public function getSchedules(Ong $ong)
+    {
+        $data = $ong->specialists->load(['schedules']);
+        return response()->json(['data' => $data]);
+    }
+
     public function store(Request $request, AddressController $addressController)
     {
         $request->validate([

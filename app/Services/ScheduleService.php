@@ -7,6 +7,7 @@ use App\Models\TypeUser;
 use App\Models\User;
 use BadMethodCallException;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,41 +53,33 @@ class ScheduleService
 
     public function store(array $scheduleData)
     {
-        $arrayDate = $this->defineArrayDate($scheduleData['start_date'], $scheduleData['end_date']);
-        $arraySchedule = $this->defineArraySchedule($scheduleData['start_time'], $scheduleData['end_time'], $scheduleData['duration']);
-        $response = [];
+        $period = CarbonPeriod::create($scheduleData['start_date'], $scheduleData['final_date']);
+        $times = CarbonPeriod::since($scheduleData['start_time'])->minutes($scheduleData['duration'])->until($scheduleData['final_time'])->toArray();
+        $schedules = [];
 
-        try
-        {
-            $this->verifyUserBelongsToOng($scheduleData['users_ids']);
+        foreach ($period as $date) {
+            $data['date'] = $date->format('Y-m-d');
+            foreach ($times as $time) {
+                DB::beginTransaction();
 
-            DB::beginTransaction();
+                $data['start_time'] = $time->format('H:i');
+                $data['end_time'] = Carbon::parse(next($times))->format('H:i');
+                $data['available'] = true;
 
-            foreach($arrayDate as $date) {
-                if($this->verifyDaysOfWeek($date, $scheduleData['days_week'])) {
-                    foreach($arraySchedule as $schedule) {
-                        $schedule = Schedule::create([
-                            'date' => $date,
-                            'start_time' => $schedule['start_schedule'],
-                            'end_time' => $schedule['end_schedule'],
-                            'available' => true,
-                        ]);
+                $schedule =  Schedule::create($data);
+                $schedule->specialists()->attach($scheduleData['specialists_ids']);
+                $schedule->save();
 
-                        $schedule->users()->attach($scheduleData['users_ids']);
-                        array_push($response, $schedule);
-                    }
-                }
+                array_push($schedules, $schedule);
+
+                DB::commit();
+
             }
-
-            DB::commit();
-        }
-        catch (BadMethodCallException | ValidationException $e)
-        {
-            DB::rollback();
-            throw ValidationException::withMessages([$e->getMessage()]);
+            
         }
 
-        return response()->json(['data' => ['schedules' => $response]], 201);
+        return $schedules;
+        // return response()->json(['data' => $schedules ], 201);
     }
 
 
@@ -102,7 +95,7 @@ class ScheduleService
             DB::beginTransaction();
                 $schedule->date = Carbon::parse($request->input('date'));
                 $schedule->start_time = Carbon::createFromTimeString($request->input('start_time'));
-                $schedule->end_time = Carbon::createFromTimeString($request->input('end_time'));
+                $schedule->end_time = Carbon::createFromTimeString($request->input('final_time'));
                 $schedule->available = $request->input('available');
                 $schedule->save();
             DB::commit();

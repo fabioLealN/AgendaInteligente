@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             // Relações many to many
             OngSpecialitySeeder::class,
             UserOngSeeder::class,
-            UserScheduleSeeder::class,
+            // UserScheduleSeeder::class,
         ]);
     }
 }
