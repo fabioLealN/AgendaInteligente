@@ -17,7 +17,7 @@ class StateSeeder extends Seeder
     public function run()
     {
         // $response = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
-        $response = File::get("database/data/country.json");
+        $response = File::get("database/data/estados.json");
         $states = collect(json_decode($response))->map(function ($state) {
             return [
                 'id' => $state->id,
