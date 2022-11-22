@@ -46,6 +46,6 @@ COPY . /var/www/app
 
 RUN composer update
 
-RUN chmod -R 000 storage/*
+RUN chmod -R 777 storage\*
 
 ADD docker/app/supervisor.conf /etc/supervisor/conf.d/worker.conf
