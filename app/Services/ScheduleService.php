@@ -54,7 +54,11 @@ class ScheduleService
     public function store(array $scheduleData)
     {
         $period = CarbonPeriod::create($scheduleData['start_date'], $scheduleData['final_date']);
-        $times = CarbonPeriod::since($scheduleData['start_time'])->minutes($scheduleData['duration'])->until($scheduleData['final_time'])->toArray();
+        $times = CarbonPeriod::since($scheduleData['start_time'])
+                    ->minutes($scheduleData['duration'])
+                    ->until($scheduleData['final_time'])
+                    ->toArray();
+
         $schedules = [];
 
         foreach ($period as $date) {
@@ -67,13 +71,12 @@ class ScheduleService
                 $data['available'] = true;
 
                 $schedule =  Schedule::create($data);
+
                 $schedule->specialists()->attach($scheduleData['specialists_ids']);
                 $schedule->save();
+            DB::commit();
 
                 array_push($schedules, $schedule);
-
-                DB::commit();
-
             }
             
         }
