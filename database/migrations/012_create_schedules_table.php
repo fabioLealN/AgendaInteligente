@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('start_time', 0);
             $table->time('end_time', 0);
-            $table->time('interval_time', 0);
+            // $table->time('interval_time', 0);
             $table->boolean('available');
             $table->timestamps();
         });

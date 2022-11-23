@@ -22,11 +22,14 @@ class UserSpeciality extends Pivot
         return $this->belongsTo(User::class);
     }
 
+    public function speciality()
+    {
+        return $this->belongsTo(Speciality::class);
+    }
     
     public function schedules()
     {
-        return $this->belongsToMany(Schedule::class, 'user_speciality_schedule', 'schedule_id', 'user_speciality_id')->using(UserSpecialitySchedule::class);
-
+        return $this->belongsToMany(Schedule::class, 'user_speciality_schedule', 'user_speciality_id', 'schedule_id')->using(UserSpecialitySchedule::class);
     }
 
 }
