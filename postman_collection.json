@@ -468,6 +468,44 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get médicos da ONG",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "5|itEZX0BRq6zmaZsMIt6dtwi5btVlwkNsjnVx4SBT",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/ongs/1/specialists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"ongs",
+								"1",
+								"specialists"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
@@ -1154,7 +1192,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|n8gqElgEuZczjIaB8xqvsB9sh5pHdjh4Opb2OmFD",
+									"value": "5|itEZX0BRq6zmaZsMIt6dtwi5btVlwkNsjnVx4SBT",
 									"type": "string"
 								}
 							]
@@ -1168,7 +1206,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8888/api/schedules/1",
+							"raw": "http://localhost:8888/api/schedules/496",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1177,7 +1215,7 @@
 							"path": [
 								"api",
 								"schedules",
-								"1"
+								"496"
 							]
 						}
 					},
@@ -1209,7 +1247,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ongs_ids\": [1, 2]\r\n}",
+							"raw": "{\r\n    \"ong_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1255,7 +1293,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"start_date\" : \"2022-11-01\",\r\n    \"end_date\": \"2022-11-10\",\r\n    \"duration\": \"01:00\",\r\n    \"start_time\": \"08:00\",\r\n    \"end_time\": \"12:00\",\r\n    \"days_week\": [\"qua\"],\r\n    \"users_ids\": [8]\r\n}",
+							"raw": "{\r\n    \"start_date\" : \"2022-11-14\",\r\n    \"end_date\": \"2022-11-14\",\r\n    \"duration\": \"01:00\",\r\n    \"start_time\": \"08:00\",\r\n    \"end_time\": \"12:00\",\r\n    \"days_week\": [\"seg\"],\r\n    \"users_ids\": [8]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1351,7 +1389,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8888/api/schedulings/50",
+							"raw": "http://localhost:8888/api/schedulings/9",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1360,7 +1398,7 @@
 							"path": [
 								"api",
 								"schedulings",
-								"50"
+								"9"
 							]
 						}
 					},
@@ -1488,7 +1526,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\" : \"Agendamento Teste2.\",\r\n    \"pet_id\": 18,\r\n    \"schedule_id\": 1,\r\n    \"type_scheduling_id\": 2\r\n}",
+							"raw": "{\r\n    \"description\" : \"Agendamento Teste Mensagem\",\r\n    \"pet_id\": 18,\r\n    \"schedule_id\": 508,\r\n    \"type_scheduling_id\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1697,7 +1735,7 @@
 						}
 					]
 				},
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
@@ -1707,7 +1745,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"teste com ONG\",\r\n    \"phone\": \"(00) 9 1111-0000\",\r\n    \"email\": \"ong@teste.com\",\r\n    \"password\": \"123Aa456*p\",\r\n    \"password_confirmation\": \"123Aa456*p\",\r\n    \"type_user_id\": 1,\r\n    \"city_id\": 1100015,\r\n    \"neighborhood\": \"São José\",\r\n    \"street\": \"Rua Tal\",\r\n    \"number\": \"123\",\r\n    \"cep\": \"99000999\"\r\n}",
+					"raw": "{\r\n    \"name\": \"teste com ONG\",\r\n    \"phone\": \"(00) 9 1111-0000\",\r\n    \"email\": \"ong24.0@teste.com\",\r\n    \"password\": \"123Aa456*p\",\r\n    \"password_confirmation\": \"123Aa456*p\",\r\n    \"type_user_id\": 2,\r\n    \"city_id\": 1100015,\r\n    \"neighborhood\": \"São José\",\r\n    \"street\": \"Rua Tal\",\r\n    \"number\": \"123\",\r\n    \"cep\": \"99000999\",\r\n    \"ongs_ids\": [1],\r\n    \"specialities_ids\": [2, 3, 1]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1715,7 +1753,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8888/api/user/update",
+					"raw": "http://localhost:8888/api/auth/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1723,8 +1761,8 @@
 					"port": "8888",
 					"path": [
 						"api",
-						"user",
-						"update"
+						"auth",
+						"register"
 					]
 				}
 			},
@@ -1855,6 +1893,27 @@
 						"api",
 						"run-artisan",
 						"seed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Teste Whats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/api/run-artisan/schedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"run-artisan",
+						"schedule"
 					]
 				}
 			},

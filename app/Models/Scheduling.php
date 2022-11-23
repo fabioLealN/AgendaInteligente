@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,8 @@ class Scheduling extends Model
     protected $table = 'schedulings';
 
     protected $guarded = [];
+
+    protected $appends = ["date", "hour"];
 
     public function pet() {
         return $this->belongsTo(Pet::class);
@@ -24,8 +27,16 @@ class Scheduling extends Model
     public function schedule() {
         return $this->belongsTo(Schedule::class);
     }
-
+    
     public function typeScheduling() {
         return $this->belongsTo(TypeScheduling::class, 'type_scheduling_id');
+    }
+
+    public function getDateAttribute() {
+        return $this->schedule->date;
+    }
+
+    public function getHourAttribute() {
+        return Carbon::parse($this->schedule->start_time)->format("H:i");
     }
 }

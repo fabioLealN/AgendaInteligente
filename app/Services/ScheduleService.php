@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class ScheduleService
@@ -30,14 +29,14 @@ class ScheduleService
     }
 
 
-    public function getAllAvailable(string $ongsIds)
+    public function getAllAvailable(string $ongId)
     {
         $schedules = Schedule::where('available', true)
             ->with('users')
             ->with('users.ongs')
             ->whereRelation('users.ongs',
-                function (Builder $query) use ($ongsIds) {
-                    $query->where('ongs.id', '=', $ongsIds);
+                function (Builder $query) use ($ongId) {
+                    $query->where('ongs.id', '=', $ongId);
                 })
             ->orderBy('start_time')
             ->get()
