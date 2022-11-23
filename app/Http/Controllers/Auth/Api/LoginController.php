@@ -19,7 +19,7 @@ class LoginController extends Controller
         }
 
         $token = $request->user()->createToken('auth_token');
-        $user =  $request->user()->load(['pets','pets.breed', 'pets.size']);
+        $user =  $request->user()->load(['pets','pets.breed', 'pets.size', 'ongs']);
 
         return response()->json(['data' => ['token' => $token->plainTextToken, 'user' => $user]]);
     }

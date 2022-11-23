@@ -32,6 +32,11 @@ class Ong extends Model
         return $this->belongsToMany(User::class, 'users_ongs')->using(UserOng::class);
     }
 
+    public function specialists()
+    {
+        return $this->belongsToMany(UserSpeciality::class, 'user_speciality_ongs', 'ong_id', 'user_speciality_id')->using(UserSpecialityOng::class)->withTimestamps();
+    }
+
     public function specialities()
     {
         return $this->belongsToMany(Speciality::class, 'ongs_specialities')->using(OngSpeciality::class);

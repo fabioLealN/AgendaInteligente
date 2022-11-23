@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('ongs', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_whatsapp')->unique()->nullable();
-            $table->string('token_whatsapp')->unique()->nullable();
-        });
+        // Schema::table('ongs', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('id_whatsapp')->unique()->nullable();
+        //     $table->string('token_whatsapp')->unique()->nullable();
+        // });
     }
 
     /**
@@ -26,8 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('ongs', function (Blueprint $table) {
-            $table->dropColumn(['id_whatsapp', 'token_whatsapp']);
-        });
+        // Schema::table('ongs', function (Blueprint $table) {
+        //     $table->dropColumn(['id_whatsapp', 'token_whatsapp']);
+        // });
     }
 };

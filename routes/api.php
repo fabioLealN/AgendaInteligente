@@ -44,6 +44,7 @@ Route::prefix('user')->group(function () {
     Route::put('{id}', [UserController::class, 'get'])->middleware('auth:sanctum');
     Route::put('update', [UserController::class, 'update'])->middleware('auth:sanctum');
     Route::get('{user}/pets', [UserController::class, 'getPets'])->middleware('auth:sanctum');
+    Route::get('specialists', [UserController::class, 'getSpecialists'])->middleware('auth:sanctum');
 });
 
 Route::prefix('pets')->group(function () {
@@ -56,7 +57,10 @@ Route::prefix('pets')->group(function () {
 Route::prefix('ongs')->group(function () {
     Route::get('/', [OngController::class, 'getAll'])->middleware('auth:sanctum');
     Route::get('{id}', [OngController::class, 'get'])->middleware('auth:sanctum');
+    Route::get('{ong}/specialists', [OngController::class, 'getSpecialists'])->middleware('auth:sanctum');
     Route::post('/', [OngController::class, 'store'])->middleware('auth:sanctum');
+    Route::post('/{ong}/specialists/{specialist}', [OngController::class, 'attachSpecialist'])->middleware('auth:sanctum');
+    Route::delete('/{ong}/specialists/{specialist}', [OngController::class, 'dettachSpecialist'])->middleware('auth:sanctum');
     Route::put('{id}', [OngController::class, 'update'])->middleware('auth:sanctum');
 });
 

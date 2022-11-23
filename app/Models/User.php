@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Schedule::class, 'users_schedules')->using(UserSchedule::class);
     }
 
+    public function schedulings()
+    {
+        return $this->hasManyThrough(Scheduling::class, Pet::class);
+    }
+
     public function address()
     {
         return $this->belongsTo(Address::class);
@@ -60,5 +65,10 @@ class User extends Authenticatable
     public function distances()
     {
         return $this->hasMany(Distance::class);
+    }
+
+    public function specialities()
+    {
+        return $this->belongsToMany(Speciality::class, 'user_specialities')->using(UserSpeciality::class)->withPivot('id');
     }
 }

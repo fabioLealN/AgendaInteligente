@@ -20,4 +20,9 @@ class Speciality extends Model
     {
         return $this->belongsToMany(Ong::class, 'ongs_specialities')->using(OngSpeciality::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_specialities')->using(UserSpeciality::class);
+    }
 }

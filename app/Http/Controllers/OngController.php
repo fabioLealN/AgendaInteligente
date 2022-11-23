@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ong;
+use App\Models\User;
 use App\Services\OngService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -19,7 +21,7 @@ class OngController extends Controller
     {
         try
         {
-            return $this->ongService->get($id);
+            return response()->json(['data' => $this->ongService->get($id)]);
         }
         catch (ValidationException $e)
         {
@@ -37,6 +39,13 @@ class OngController extends Controller
         {
             return response()->json(['error' => $e->getMessage()], 404);
         }
+    }
+
+
+    public function getSpecialists(Ong $ong)
+    {
+        $data = $ong->specialists->load(['user', 'user.specialities']);
+        return response()->json(['data' => $data]);
     }
 
     public function store(Request $request, AddressController $addressController)
@@ -78,5 +87,23 @@ class OngController extends Controller
         ]);
 
         return $this->ongService->update($id, $request);
+    }
+
+    public function attachSpecialist(Request $request, Ong $ong, User $specialist)
+    {
+        $specialities = $specialist->specialities->pluck('pivot.id');
+        $ong->specialists()->attach($specialities);
+        $ong->load('specialists');
+
+        return response()->json(['data' => $ong]);
+    }
+
+    public function dettachSpecialist(Request $request, Ong $ong, User $specialist)
+    {
+        $specialities = $specialist->specialities->pluck('pivot.id');
+        $ong->specialists()->detach($specialities);
+        $ong->load('specialists');
+
+        return response()->json(['data' => $ong]);
     }
 }
