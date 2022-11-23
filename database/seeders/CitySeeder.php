@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\City;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
+use File;
 
 class CitySeeder extends Seeder
 {
@@ -15,8 +16,8 @@ class CitySeeder extends Seeder
      */
     public function run()
     {
-        $response = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
-
+        // $response = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
+        $response = File::get("database/data/municipios.json");
         $cities = collect(json_decode($response))->map(function ($city) {
             return [
                 'id' => $city->id,

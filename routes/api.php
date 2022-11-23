@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/teste', function() {
+    return "o meu deus";
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -58,6 +61,7 @@ Route::prefix('ongs')->group(function () {
     Route::get('/', [OngController::class, 'getAll'])->middleware('auth:sanctum');
     Route::get('{id}', [OngController::class, 'get'])->middleware('auth:sanctum');
     Route::get('{ong}/specialists', [OngController::class, 'getSpecialists'])->middleware('auth:sanctum');
+    Route::get('{ong}/schedules', [OngController::class, 'getSchedules'])->middleware('auth:sanctum');
     Route::post('/', [OngController::class, 'store'])->middleware('auth:sanctum');
     Route::post('/{ong}/specialists/{specialist}', [OngController::class, 'attachSpecialist'])->middleware('auth:sanctum');
     Route::delete('/{ong}/specialists/{specialist}', [OngController::class, 'dettachSpecialist'])->middleware('auth:sanctum');
