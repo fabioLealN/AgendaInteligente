@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Ong;
 use App\Models\Schedule;
 use App\Models\TypeUser;
 use App\Models\User;
@@ -32,16 +33,18 @@ class ScheduleService
 
     public function getAllAvailable(string $ongId)
     {
-        $schedules = Schedule::where('available', true)
-            ->with('users')
-            ->with('users.ongs')
-            ->whereRelation('users.ongs',
-                function (Builder $query) use ($ongId) {
-                    $query->where('ongs.id', '=', $ongId);
-                })
-            ->orderBy('start_time')
-            ->get()
-            ->toArray();
+        $ong = Ong::find($ongId);
+        $schedules = $ong->specialists->load(['schedules']);
+
+        // $schedules = Schedule::where('available', true)
+        //     ->with()
+        //     ->whereRelation('specialists.ongs',
+        //         function (Builder $query) use ($ongId) {
+        //             $query->where('ongs.id', '=', $ongId);
+        //         })
+        //     ->orderBy('start_time')
+        //     ->get()
+        //     ->toArray();
 
         if(!$schedules) {
             throw ValidationException::withMessages(['Não há ONGs disponíveis.']);

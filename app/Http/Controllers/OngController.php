@@ -50,7 +50,6 @@ class OngController extends Controller
 
     public function getSchedules(Ong $ong)
     {
-        // $data = $ong->specialists->load(['schedules', 'user', 'speciality']);
         $data = $ong->specialists()->with(['schedules', 'user', 'speciality'])->get()->groupBy('user.id');
         return response()->json(['data' => $data]);
     }
