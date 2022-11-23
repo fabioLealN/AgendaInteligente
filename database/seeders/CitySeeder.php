@@ -18,20 +18,12 @@ class CitySeeder extends Seeder
     {
         // $response = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
         $response = File::get("database/data/municipios.json");
-        $cities = collect(json_decode($response))->map(function ($city) {
-            return [
+        collect(json_decode($response))->map(function ($city) {
+            City::create([
                 'id' => $city->id,
                 'name' => $city->nome,
                 'state_id' => $city->microrregiao->mesorregiao->UF->id,
-            ];
-        })->toArray();
-
-        foreach ($cities as $city) {
-            City::create([
-                'id' => $city['id'],
-                'name' => $city['name'],
-                'state_id' => $city['state_id'],
             ]);
-        }
+        });
     }
 }

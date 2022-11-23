@@ -32,6 +32,11 @@ class Schedule extends Model
 
     }
 
+    public function speciality()
+    {
+        
+    }
+
     public function schedulings()
     {
         return $this->hasOne(Scheduling::class);

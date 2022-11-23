@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Ong;
 use App\Models\Schedule;
 use App\Models\TypeUser;
 use App\Models\User;
@@ -32,16 +33,18 @@ class ScheduleService
 
     public function getAllAvailable(string $ongId)
     {
-        $schedules = Schedule::where('available', true)
-            ->with('users')
-            ->with('users.ongs')
-            ->whereRelation('users.ongs',
-                function (Builder $query) use ($ongId) {
-                    $query->where('ongs.id', '=', $ongId);
-                })
-            ->orderBy('start_time')
-            ->get()
-            ->toArray();
+        $ong = Ong::find($ongId);
+        $schedules = $ong->specialists->load(['schedules']);
+
+        // $schedules = Schedule::where('available', true)
+        //     ->with()
+        //     ->whereRelation('specialists.ongs',
+        //         function (Builder $query) use ($ongId) {
+        //             $query->where('ongs.id', '=', $ongId);
+        //         })
+        //     ->orderBy('start_time')
+        //     ->get()
+        //     ->toArray();
 
         if(!$schedules) {
             throw ValidationException::withMessages(['Não há ONGs disponíveis.']);
@@ -54,7 +57,11 @@ class ScheduleService
     public function store(array $scheduleData)
     {
         $period = CarbonPeriod::create($scheduleData['start_date'], $scheduleData['final_date']);
-        $times = CarbonPeriod::since($scheduleData['start_time'])->minutes($scheduleData['duration'])->until($scheduleData['final_time'])->toArray();
+        $times = CarbonPeriod::since($scheduleData['start_time'])
+                    ->minutes($scheduleData['duration'])
+                    ->until($scheduleData['final_time'])
+                    ->toArray();
+
         $schedules = [];
 
         foreach ($period as $date) {
@@ -67,13 +74,12 @@ class ScheduleService
                 $data['available'] = true;
 
                 $schedule =  Schedule::create($data);
+
                 $schedule->specialists()->attach($scheduleData['specialists_ids']);
                 $schedule->save();
+            DB::commit();
 
                 array_push($schedules, $schedule);
-
-                DB::commit();
-
             }
             
         }
