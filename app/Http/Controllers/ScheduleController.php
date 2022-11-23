@@ -47,27 +47,27 @@ class ScheduleController extends Controller
     {
         $request->validate([
             'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date'],
+            'final_date' => ['required', 'date'],
             'duration' => ['required'],
             'start_time' => ['required'],
-            'end_time' => ['required'],
+            'final_time' => ['required'],
             'days_week' => ['array', 'nullable'],
-            'users_ids' => ['required', 'array'],
+            'specialists_ids' => ['required', 'array'],
         ]);
 
         $scheduleData = $request->only(
             'start_date',
-            'end_date',
+            'final_date',
             'duration',
             'start_time',
-            'end_time',
+            'final_time',
             'days_week',
-            'users_ids'
+            'specialists_ids'
         );
 
         try
         {
-            return $this->scheduleService->store($scheduleData);
+            return response()->json(['data' => $this->scheduleService->store($scheduleData)]);
         }
         catch (ValidationException $e)
         {
