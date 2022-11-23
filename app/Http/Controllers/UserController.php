@@ -34,6 +34,13 @@ class UserController extends Controller
         return response()->json(['data' => $pets]);
     }
 
+    public function getSpecialists()
+    {
+        $specialists = User::where('type_user_id', 1)->whereHas('specialities')->with('specialities')->get();
+
+        return response()->json(['data' => $specialists]);
+    }
+
     public function update(Request $request) {
         $request->validate([
             'name' => ['required'],

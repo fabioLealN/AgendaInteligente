@@ -21,7 +21,7 @@ class OngService
             throw ValidationException::withMessages(['ONG não encontrada.']);
         }
 
-        return $ong->load('specialities');
+        return $ong->load('specialists');
     }
 
     public function getAll()
