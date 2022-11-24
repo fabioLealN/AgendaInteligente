@@ -19,4 +19,9 @@ class Size extends Model
     {
         return $this->belongsTo(Pet::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(Schedule::class, 'schedule_sizes')->using(ScheduleSize::class);
+    }
 }

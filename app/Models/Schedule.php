@@ -36,4 +36,9 @@ class Schedule extends Model
     {
         return $this->hasOne(Scheduling::class);
     }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'schedule_sizes')->using(ScheduleSize::class);
+    }
 }
