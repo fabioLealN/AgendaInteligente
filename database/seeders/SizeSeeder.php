@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Size;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class SizeSeeder extends Seeder
 {
@@ -15,16 +16,23 @@ class SizeSeeder extends Seeder
      */
     public function run()
     {
-        $sizes = [
-            ['name' => 'Pequeno Porte'],
-            ['name' => 'Médio Porte'],
-            ['name' => 'Grande Porte']
-        ];
+        $sizes = [];
 
-        foreach ($sizes as $size) {
-            Size::create([
-                'name' => $size['name'],
-            ]);
+        for ($weight = 0; $weight <= 50; $weight+=5) {
+            $first = $weight;
+
+            if ($weight >= 5) $first += 1;
+
+            if ($weight === 50) {
+                $size = "+{$weight}Kg";
+            } else {
+                $second = $weight + 5;
+                $size = "{$first}Kg - {$second}Kg";
+            }
+
+            array_push($sizes, ['name' => $size]);
         }
+
+        Size::insert($sizes);
     }
 }
