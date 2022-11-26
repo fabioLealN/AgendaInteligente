@@ -44,7 +44,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
-    Route::put('{id}', [UserController::class, 'get'])->middleware('auth:sanctum');
+    Route::get('{id}', [UserController::class, 'get'])->middleware('auth:sanctum');
     Route::put('update', [UserController::class, 'update'])->middleware('auth:sanctum');
     Route::get('{user}/pets', [UserController::class, 'getPets'])->middleware('auth:sanctum');
     Route::get('specialists', [UserController::class, 'getSpecialists'])->middleware('auth:sanctum');
