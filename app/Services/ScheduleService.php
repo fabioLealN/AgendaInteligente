@@ -70,18 +70,23 @@ class ScheduleService
                 DB::beginTransaction();
 
                 $data['start_time'] = $time->format('H:i');
-                $data['end_time'] = Carbon::parse(next($times))->format('H:i');
-                $data['available'] = true;
 
-                $schedule =  Schedule::create($data);
+                if (next($times)) {
+                    $data['end_time'] = Carbon::parse(current($times))->format('H:i');
+                    $data['available'] = true;
 
-                $schedule->specialists()->attach($scheduleData['specialists_ids']);
-                $schedule->save();
-            DB::commit();
+                    $schedule =  Schedule::create($data);
+                    $schedule->specialists()->attach($scheduleData['specialists_ids']);
+                    $schedule->sizes()->attach($scheduleData['sizes_ids']);
+                    $schedule->save();
 
-                array_push($schedules, $schedule);
+                    array_push($schedules, $schedule);
+                }
+
+                DB::commit();
+
             }
-            
+
         }
 
         return $schedules;
@@ -102,6 +107,7 @@ class ScheduleService
                 $schedule->date = Carbon::parse($request->input('date'));
                 $schedule->start_time = Carbon::createFromTimeString($request->input('start_time'));
                 $schedule->end_time = Carbon::createFromTimeString($request->input('final_time'));
+                $schedule->sizes()->sync($request->input('sizes_ids'));
                 $schedule->available = $request->input('available');
                 $schedule->save();
             DB::commit();

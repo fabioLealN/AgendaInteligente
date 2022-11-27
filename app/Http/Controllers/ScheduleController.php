@@ -53,6 +53,7 @@ class ScheduleController extends Controller
             'final_time' => ['required'],
             'days_week' => ['array', 'nullable'],
             'specialists_ids' => ['required', 'array'],
+            'sizes_ids' => ['required', 'array'],
         ]);
 
         $scheduleData = $request->only(
@@ -62,7 +63,8 @@ class ScheduleController extends Controller
             'start_time',
             'final_time',
             'days_week',
-            'specialists_ids'
+            'specialists_ids',
+            'sizes_ids'
         );
 
         try
@@ -80,8 +82,9 @@ class ScheduleController extends Controller
         $request->validate([
             'date' => ['required', 'date'],
             'start_time' => ['required'],
-            'end_time' => ['required'],
+            'final_time' => ['required'],
             'available' => ['required', 'boolean'],
+            'sizes_ids' => ['required', 'array']
         ]);
 
         return $this->scheduleService->update($id, $request);

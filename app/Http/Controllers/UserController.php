@@ -43,8 +43,11 @@ class UserController extends Controller
 
     public function update(Request $request) {
         $request->validate([
-            'name' => ['required'],
+            'name' => ['required', 'string'],
             'phone' => ['required'],
+            'type_user_id' => ['required', 'integer'],
+            'specialities_ids' => ['required', 'array'],
+            'ongs_ids' => ['required', 'array'],
         ]);
 
         return $this->userService->update($request);

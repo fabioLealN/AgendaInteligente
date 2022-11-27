@@ -47,7 +47,6 @@ class SchedulingService
                 ->with(["typeScheduling", "schedule.speciality", "pet", "pet.breed", "pet.size"])
                 ->whereRelation('schedule', 'date', '>=', Carbon::today('America/Sao_Paulo')->format('Y-m-d'))
                 ->get()
-                // ->filter(fn ($scheduling) => $scheduling->date >= $today )
                 ->sortBy([["date", "asc"], ["hour", "asc"]])
                 ->take(5)
                 ->values();
