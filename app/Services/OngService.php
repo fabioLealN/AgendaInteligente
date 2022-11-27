@@ -15,13 +15,9 @@ class OngService
 {
     public function get($id)
     {
-        $ong = Ong::find($id);
+        $ong = Ong::findOrFail($id);
 
-        if(!$ong) {
-            throw ValidationException::withMessages(['ONG não encontrada.']);
-        }
-
-        return $ong->load('specialists');
+        return $ong->load(['specialists', 'specialists.schedules']);
     }
 
     public function getAll()

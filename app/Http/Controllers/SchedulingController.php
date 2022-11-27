@@ -70,6 +70,7 @@ class SchedulingController extends Controller
             'schedule_id',
             'ong_id',
             'type_scheduling_id',
+            'ong_id',
         );
 
         try

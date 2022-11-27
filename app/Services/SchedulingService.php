@@ -44,7 +44,7 @@ class SchedulingService
         $today = Carbon::today('America/Sao_Paulo')->format('Y-m-d');
 
         return $user->schedulings()
-                ->with(["typeScheduling","schedule.users", "pet", "pet.breed", "pet.size"])
+                ->with(["typeScheduling", "schedule.speciality", "pet", "pet.breed", "pet.size"])
                 ->whereRelation('schedule', 'date', '>=', Carbon::today('America/Sao_Paulo')->format('Y-m-d'))
                 ->get()
                 ->sortBy([["date", "asc"], ["hour", "asc"]])
@@ -56,7 +56,7 @@ class SchedulingService
     public function store(array $schedulingData)
     {
         [ , $schedule, ] = $this->verifyRelations($schedulingData);
-
+        
         try  {
             DB::beginTransaction();
                 $scheduling = Scheduling::create($schedulingData);
@@ -67,9 +67,10 @@ class SchedulingService
 
                 $schedule->available = false;
                 $schedule->save();
+
             DB::commit();
 
-            return response()->json(['data' => ['scheduling' => $scheduling]], 201);
+            return response()->json(['data' => $scheduling], 201);
         }
         catch (BadMethodCallException | ValidationException $e)
         {
@@ -92,6 +93,7 @@ class SchedulingService
                 $scheduling->description = $schedulingData['description'];
                 $scheduling->schedule->available = true;
                 $scheduling->schedule_id = $schedulingData['schedule_id'];
+                $scheduling->ong_id = $schedulingData['ong_id'];
                 $scheduling->push();
                 $scheduling->save();
 
