@@ -33,8 +33,8 @@ class ScheduleService
     public function getAllAvailable(string $ongId)
     {
         $schedules = Schedule::where('available', true)
-            ->with(['users', 'users.ongs', 'sizes'])
-            ->whereRelation('users.ongs',
+            ->with(['specialists.user.ongs', 'sizes'])
+            ->whereRelation('specialists.user.ongs',
                 function (Builder $query) use ($ongId) {
                     $query->where('ongs.id', '=', $ongId);
                 })

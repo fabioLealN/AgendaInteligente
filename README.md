@@ -28,6 +28,15 @@ ou, caso este comando não funcione, rode (sudo em caso de terminais linux):<br>
 Caso não consiga acessar a api do Laravel rode o comando na raiz do projeto:<br>
 `composer install`
 
+Para rodar o cron:<br>
+`apt-get update`<br>
+após execute:<br>
+`apt-get install -y cron`<br>
+é necessário atualizar o arquivo:<br>
+`crontab -e`<br>
+e cole o o seguinte código:<br>
+`* * * * * cd /usr/share/nginx && php artisan schedule:run >> /dev/null 2>&1`<br>
+
 
 - Api Laravel: http://localhost:8888/
 - Adminer: http://localhost:8081/
