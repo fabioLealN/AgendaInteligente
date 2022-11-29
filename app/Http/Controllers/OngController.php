@@ -44,7 +44,8 @@ class OngController extends Controller
 
     public function getSpecialists(Ong $ong)
     {
-        $data = $ong->specialists->load(['user', 'user.specialities']);
+        $data = $ong->specialists->load(['user', 'schedules', 'speciality']);
+        // $data = $ong->specialists->load(['user', 'user.specialities', 'schedules', 'speciality']);
         return response()->json(['data' => $data]);
     }
 
