@@ -54,11 +54,12 @@ class OngController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function getNextSchedules(Ong $ong)
+    public function getNextSchedulesBySpecialist(Ong $ong)
     {
         $data = $ong->specialists()->with(['schedules' => function ($query) {
-            $query->where('date', '>=', date('Y-m-d'))->where('date', '<=', date('Y-m-d', strtotime('+7 days')));
+            $query->where('date', '>=', date('Y-m-d'))->where('date', '<=', date('Y-m-d', strtotime('+7 days')))->where('available', '=', false);
         }, 'user', 'speciality'])->get()->groupBy('user.id');
+
 
         return response()->json(['data' => $data]);
     }
