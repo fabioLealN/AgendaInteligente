@@ -62,6 +62,7 @@ Route::prefix('ongs')->group(function () {
     Route::get('{id}', [OngController::class, 'get'])->middleware('auth:sanctum');
     Route::get('{ong}/specialists', [OngController::class, 'getSpecialists'])->middleware('auth:sanctum');
     Route::get('{ong}/schedules', [OngController::class, 'getSchedules'])->middleware('auth:sanctum');
+    Route::get('{ong}/specialists-next-schedules', [OngController::class, 'getNextSchedulesBySpecialist'])->middleware('auth:sanctum');
     Route::post('/', [OngController::class, 'store'])->middleware('auth:sanctum');
     Route::post('/{ong}/specialists/{specialist}', [OngController::class, 'attachSpecialist'])->middleware('auth:sanctum');
     Route::delete('/{ong}/specialists/{specialist}', [OngController::class, 'dettachSpecialist'])->middleware('auth:sanctum');
