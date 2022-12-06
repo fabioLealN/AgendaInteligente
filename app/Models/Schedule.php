@@ -34,11 +34,16 @@ class Schedule extends Model
 
     public function speciality()
     {
-        
+        return $this->belongsTo(Speciality::class);
     }
 
     public function schedulings()
     {
         return $this->hasOne(Scheduling::class);
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'schedule_sizes')->using(ScheduleSize::class);
     }
 }

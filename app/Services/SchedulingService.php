@@ -41,23 +41,17 @@ class SchedulingService
     public function getFutureSchedulings()
     {
         $user = User::find(Auth::user()->id);
-        $today = Carbon::today('America/Sao_Paulo')->format('Y-m-d');
 
-        return $user->schedulings()
-                ->with(["typeScheduling", "schedule.speciality", "pet", "pet.breed", "pet.size"])
-                ->whereRelation('schedule', 'date', '>=', Carbon::today('America/Sao_Paulo')->format('Y-m-d'))
-                ->get()
-                // ->filter(fn ($scheduling) => $scheduling->date >= $today )
-                ->sortBy([["date", "asc"], ["hour", "asc"]])
-                ->take(5)
-                ->values();
+        return $user->schedulings()->with(["typeScheduling", "schedule" => function($query) {
+            return $query->where('date', '>=', date('Y-m-d'))->orderBy('date', 'asc')->orderBy("start_time", "asc");
+        },"schedule.speciality", "pet", "pet.breed", "pet.size"])->limit(5)->get();
     }
 
 
     public function store(array $schedulingData)
     {
         [ , $schedule, ] = $this->verifyRelations($schedulingData);
-        
+
         try  {
             DB::beginTransaction();
                 $scheduling = Scheduling::create($schedulingData);

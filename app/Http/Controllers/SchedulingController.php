@@ -68,6 +68,7 @@ class SchedulingController extends Controller
             'description',
             'pet_id',
             'schedule_id',
+            'ong_id',
             'type_scheduling_id',
             'ong_id',
         );
