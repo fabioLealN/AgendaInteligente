@@ -42,8 +42,8 @@ class SchedulingService
     {
         $user = User::find(Auth::user()->id);
 
-        return $user->schedulings()->with(["typeScheduling", "schedule" => function($query) {
-            return $query->where('date', '>=', date('Y-m-d'))->orderBy('date', 'asc')->orderBy("start_time", "asc");
+        return $user->schedulings()->whereRelation("schedule", 'date', '>=', date('Y-m-d'))->with(["typeScheduling", "schedule" => function($query) {
+            $query->orderBy('date', 'asc')->orderBy("start_time", "asc");
         },"schedule.speciality", "pet", "pet.breed", "pet.size"])->limit(5)->get();
     }
 
