@@ -33,10 +33,10 @@ class Scheduling extends Model
     }
 
     public function getDateAttribute() {
-        return $this->schedule->date;
+        return $this->schedule->date ?? null;
     }
 
     public function getHourAttribute() {
-        return Carbon::parse($this->schedule->start_time)->format("H:i");
+        return $this->schedule ? Carbon::parse($this->schedule->start_time)->format("H:i") : null;
     }
 }

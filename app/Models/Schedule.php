@@ -23,7 +23,6 @@ class Schedule extends Model
         'start_time' => 'datetime:H:i',
         'end_time' => 'datetime:H:i',
         'available' => 'boolean'
-
     ];
 
     public function specialists()
